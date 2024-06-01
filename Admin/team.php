@@ -201,6 +201,11 @@ if($selezione){
 		$email = $array["email_t"];
 		$codice = $array["codice"];
 
+    $email = stripslashes($email);
+    $email = strip_tags($email);
+    $email = mysqli_real_escape_string($conn, $email);
+    $email = htmlentities($email);
+
 
 		//da qui c'è il menù a discesa riempito con i valori del database
 	echo"

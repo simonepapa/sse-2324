@@ -4,8 +4,9 @@ $conn = new MySQLi("localhost", "root", "", "civicsense");
 $upload_path = 'jpeg/';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$file_path = $upload_path . $_FILES['image']['name'];
-	$img_name = $_FILES['image']['name'];
+	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']);
+	$file_path = $upload_path . $sanitized_image_name;
+	$img_name = preg_replace("/[^a-zA-Z0-9]+/", "", $sanitized_image_name);
 	$email = $_POST['email'];
 	$tipo = $_POST['tipo'];
 	if ($tipo == "Segnalazione di area verde") {
@@ -29,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$sanitized_file_path = preg_replace("/[^a-zA-Z0-9]+/", "", $file_path);
 
 	try {
-		move_uploaded_file($_FILES['image']['tmp_name'], $sanitized_file_path);
+		move_uploaded_file($sanitized_image_name, $file_path);
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
 		$stmt = $mysqli->prepare($query);

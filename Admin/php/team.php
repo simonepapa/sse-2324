@@ -1,19 +1,27 @@
 <?php
-$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-$sql = mysqli_query($conn,"SELECT * FROM team");
+$sql = mysqli_query($conn, "SELECT * FROM team");
 
+function sanitize_content($conn, $content)
+{
+    $cont = stripslashes($content);
+    $cont = strip_tags($cont);
+    $cont = mysqli_real_escape_string($conn, $cont);
+    $cont = htmlentities($cont);
 
-    // output data of each row
-    while($row = mysqli_fetch_assoc($sql)) {
-        echo "
+    return $cont;
+}
+// output data of each row
+while ($row = mysqli_fetch_assoc($sql)) {
+    echo "
 		<tr>
-                <td>".$row['codice']." </td>
+                <td>" . sanitize_content($conn, $row['codice']) . " </td>
                 
-                <td>".$row['email_t']."</td> 
+                <td>" . sanitize_content($conn, $row['email_t']) . "</td> 
                 
-              <td>".$row['nomi']."</td>
+              <td>" . sanitize_content($conn, $row['nomi']) . "</td>
                
           </tr> ";
-    }
+}
 ?>

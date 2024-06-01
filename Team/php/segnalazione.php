@@ -1,47 +1,56 @@
 <?php
-$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
 
-mysql_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
+mysqli_select_db($connect, "civicsense") or die("DataBase non trovato"); #connessione al db
 
-if(isset($_SESSION['idT'])){
-	$upload_path = '../Admin/img/';
-  
-
-$team = (isset($_POST['team'])) ? $_POST['team'] : null;
+if (isset($_SESSION['idT'])) {
+  $upload_path = '../Admin/img/';
 
 
+  $team = (isset($_POST['team'])) ? $_POST['team'] : null;
 
-    $quer = mysql_query ("SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ".$_SESSION['idT'] );
-  
+  function sanitize_content($conn, $content)
+  {
+    $cont = stripslashes($content);
+    $cont = strip_tags($cont);
+    $cont = mysqli_real_escape_string($conn, $cont);
+    $cont = htmlentities($cont);
 
-    while($row = mysql_fetch_assoc($quer)) {
-        echo "
+    return $cont;
+  }
+
+
+  $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = " . sanitize_content($conn, $_SESSION['idT']));
+
+
+  while ($row = mysqli_fetch_assoc($quer)) {
+    echo "
     <tr>
      
-                <td>".$row['id']." <br></td>
+                <td>" . sanitize_content($conn, $row['id']) . " <br></td>
                 
-                <td>".$row['datainv']." <br></td> 
+                <td>" . sanitize_content($conn, $row['datainv']) . " <br></td> 
                 
-              <td>".$row['orainv']."<br></td>
+              <td>" . sanitize_content($conn, $row['orainv']) . "<br></td>
 
-               <td>".$row['via']."<br></td>
+               <td>" . sanitize_content($conn, $row['via']) . "<br></td>
 
-                <td>".$row['descrizione']."<br></td>
+                <td>" . sanitize_content($conn, $row['descrizione']) . "<br></td>
 
-                 <td><img width='200px' height='200px' src=".$upload_path.$row['foto']."><br></td>
+                 <td><img width='200px' height='200px' src=" . $upload_path . sanitize_content($conn, $row['foto']) . "><br></td>
 				  
-				   <td>".$row['tipo']."<br></td>
+				   <td>" . sanitize_content($conn, $row['tipo']) . "<br></td>
 
-                   <td>".$row['stato']."<br></td>
+                   <td>" . sanitize_content($conn, $row['stato']) . "<br></td>
 
-                   <td>".$row['gravita']."<br></td>
+                   <td>" . sanitize_content($conn, $row['gravita']) . "<br></td>
                
           </tr> ";
-    }
-
-
-
   }
+
+
+
+}
 
 
 

@@ -167,8 +167,18 @@
         $result = mysqli_query($conn,$sql);
         if($result){
           while($row=mysqli_fetch_assoc($result)){
+            function sanitize_content($conn, $content)
+            {
+              $cont = stripslashes($content);
+              $cont = strip_tags($cont);
+              $cont = mysqli_real_escape_string($conn, $cont);
+              $cont = htmlentities($cont);
+
+              return $cont;
+            }
+
             echo "
-            var location = new google.maps.LatLng(".$row['latitudine'].",".$row['longitudine'].");
+            var location = new google.maps.LatLng(".sanitize_content($conn, $row['latitudine']).",".sanitize_content($conn, $row['longitudine']).");
             var marker = new google.maps.Marker({
               map: map,
               position: location
