@@ -1,4 +1,6 @@
 <?php
+$cod=mysqli_real_escape_string($cod);
+$cod=stripslashes($cod);
 
 $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
