@@ -4,15 +4,6 @@ $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita
 
 mysqli_select_db($conn, "civicsense") or die("DataBase non trovato");
 
-function sanitize_content($conn, $content)
-{
-    $cont = stripslashes($content);
-    $cont = strip_tags($cont);
-    $cont = mysqli_real_escape_string($conn, $cont);
-    $cont = htmlentities($cont);
-
-    return $cont;
-}
 
 $id = $_POST['id'];
 $team = $_POST['team'];

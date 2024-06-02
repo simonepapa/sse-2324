@@ -4,8 +4,8 @@ $conn = new MySQLi("localhost", "root", "", "civicsense");
 $upload_path = 'jpeg/';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']);
-	$sanitized_imagetmp_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['tmp_name']);
+	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']); // To put in DB
+	$sanitized_imagetmp_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['tmp_name']); // To move file
 
 	$file_path = $upload_path . $sanitized_image_name;
 	$sanitized_file_path = preg_replace("/[^a-zA-Z0-9]+/", "", $file_path);
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		move_uploaded_file($sanitized_imagetmp_name, $sanitized_file_path);
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
-		$stmt = $mysqli->prepare($query);
+		$stmt = mysqli_prepare($conn, $query);
 		$stmt->bind_param('ssbsidd', $via, $descrizione, $sanitized_image_name, $email, $tipo, $lat, $lng);
 		$stmt->execute();
 		$result = $stmt->get_result();

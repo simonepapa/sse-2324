@@ -38,7 +38,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top"  >
 
-      <a class="navbar-brand mr-1" href="" style="  "> Area riservata</a>
+      <a class="navbar-brand me-1" href="" style="  "> Area riservata</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -56,10 +56,10 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -109,7 +109,7 @@
 
 
         <li class="nav-item active">
-          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
         <span>Segnalazioni</span>
           </a>
@@ -170,15 +170,7 @@
         $result = mysqli_query($conn,$sql);
         if($result){
           while($row=mysqli_fetch_assoc($result)){
-            function sanitize_content($conn, $content)
-            {
-              $cont = stripslashes($content);
-              $cont = strip_tags($cont);
-              $cont = mysqli_real_escape_string($conn, $cont);
-              $cont = htmlentities($cont);
-
-              return $cont;
-            }
+            
             echo "
             var location = new google.maps.LatLng(".sanitize_content($conn, $row['latitudine']).",".sanitize_content($conn, $row['longitudine']).");
             var marker = new google.maps.Marker({
@@ -247,9 +239,9 @@ Modifica gravità di una segnalazione</div>
 <b> CODICE SEGNALAZIONE DA MODIFICARE: </b> <input type="text" name="idt"><br><br>
 <b> INSERISCI LA GRAVITA' MODIFICATA: </b> <select class="text" name="gravit"> 
    
-    <option value="Alta">Alta</option>
-    <option value="Media">Media</option>
-    <option value="Bassa">Bassa</option>
+    <option value="1">Alta</option>
+    <option value="2">Media</option>
+    <option value="3">Bassa</option>
 	
 </select>
 
@@ -270,14 +262,22 @@ if (isset($_POST['submit'])){
 if ($idt && $grav !== null) {
 
 	$resultC = mysqli_query($conn,"SELECT * FROM segnalazioni WHERE tipo = '1'");
-	if($resultC){
+	if($resultC) {
 		$row = mysqli_fetch_assoc($resultC);
 		if($id == $row['id']){
-			$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
+			// VULNERABILITY: SQL INJECTION
+      //$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
 
-			$result = mysqli_query($conn,$query);	
+      //$result = mysqli_query($conn,$query); 
 
-			if($query){
+      $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
+
+      $stmt = mysqli_prepare($conn, $query);
+      $stmt->bind_param('ii', $grav, $idt);
+      $stmt->execute();
+      $result = $stmt->get_result();
+
+			if($result){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 			} 
 		}else{

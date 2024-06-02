@@ -1,21 +1,7 @@
 <?php
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-
-
-
-$upload_path = 'img/';
 $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '2' ");
-
-function sanitize_content($conn, $content)
-{
-  $cont = stripslashes($content);
-  $cont = strip_tags($cont);
-  $cont = mysqli_real_escape_string($conn, $cont);
-  $cont = htmlentities($cont);
-
-  return $cont;
-}
 
 
 while ($row = mysqli_fetch_assoc($quer)) {
@@ -32,7 +18,7 @@ while ($row = mysqli_fetch_assoc($quer)) {
 
                 <td>" . sanitize_content($conn, $row['descrizione']) . "<br></td>
 
-                 <td><img width='200px' height='200px' src=" . $upload_path . sanitize_content($conn, $row['foto']) . "><br></td>
+                <td><img width='200px' height='200px' src=data:image/jpeg;base64," . sanitize_content($conn, base64_encode($row['foto'])) . "><br></td>
 
                   <td>" . sanitize_content($conn, $row['email']) . "<br></td>
 

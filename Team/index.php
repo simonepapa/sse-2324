@@ -37,15 +37,15 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href=""> Area riservata</a>
+      <a class="navbar-brand me-1" href=""> Area riservata</a>
 
       
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -115,15 +115,6 @@
         $result = mysqli_query($conn,$sql);
         if($result){
           while($row=mysqli_fetch_assoc($result)){
-            function sanitize_content($conn, $content)
-            {
-              $cont = stripslashes($content);
-              $cont = strip_tags($cont);
-              $cont = mysqli_real_escape_string($conn, $cont);
-              $cont = htmlentities($cont);
-
-              return $cont;
-            }
 
             echo "
             var location = new google.maps.LatLng(".sanitize_content($conn, $row['latitudine']).",".sanitize_content($conn, $row['longitudine']).");
