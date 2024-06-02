@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php 
+  $env = parse_ini_file('../.env');
+?>
 <html lang="en">
 
   <head>
@@ -198,7 +201,7 @@
     </script>
     
   <script async defer 
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=<?php echo $env['GOOGLE_MAPS_API_KEY']; ?>&callback=initMap">
     </script>
   
 			<!-- FINE MAPPA -->
