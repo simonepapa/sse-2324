@@ -5,8 +5,11 @@ $upload_path = 'jpeg/';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']);
+	$sanitized_imagetmp_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['tmp_name']);
+
 	$file_path = $upload_path . $sanitized_image_name;
-	$img_name = preg_replace("/[^a-zA-Z0-9]+/", "", $sanitized_image_name);
+	$sanitized_file_path = preg_replace("/[^a-zA-Z0-9]+/", "", $file_path);
+
 	$email = $_POST['email'];
 	$tipo = $_POST['tipo'];
 	if ($tipo == "Segnalazione di area verde") {
@@ -27,14 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lng = $_POST['longitudine'];
 	$lng = floatval($lng);
 
-	$sanitized_file_path = preg_replace("/[^a-zA-Z0-9]+/", "", $file_path);
-
 	try {
-		move_uploaded_file($sanitized_image_name, $file_path);
+		move_uploaded_file($sanitized_imagetmp_name, $sanitized_file_path);
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
 		$stmt = $mysqli->prepare($query);
-		$stmt->bind_param('ssbsidd', $via, $descrizione, $img_name, $email, $tipo, $lat, $lng);
+		$stmt->bind_param('ssbsidd', $via, $descrizione, $sanitized_image_name, $email, $tipo, $lat, $lng);
 		$stmt->execute();
 		$result = $stmt->get_result();
 		if ($result) {
