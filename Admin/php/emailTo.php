@@ -7,26 +7,36 @@ session_start();
 
 require ('phpmailer/class.phpmailer.php');
 include('phpmailer/class.smtp.php');
-$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+
+//$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita: " . mysqli_connect_error());
 
 if (isset($_POST['id'])&& isset($_POST['stato'])) {
-	$idS = $_POST['id'];
-	$stato = $_POST['stato'];
+	/*$idS = $_POST['id'];
+	$stato = $_POST['stato'];*/
+	$idS = mysqli_real_escape_string($conn, $_POST['id']); // Sanitize input
+    $stato = mysqli_real_escape_string($conn, $_POST['stato']); // Sanitize input	
 	
 	$query = "SELECT * FROM segnalazioni WHERE id =$idS";
 	
 	$result = mysqli_query($conn,$query);	
+
+	//da ente a team
 	
-	if($result){
-		//da ente a team
+	          //if($result){      // POSSIBLE VULNERABILITY
+     if ($result && mysqli_num_rows($result) > 0) {
+	
 		$row = mysqli_fetch_assoc($result);
 		if($row['stato']=="In attesa" && $stato=="In risoluzione"){ //confronta stato attuale e quello da modificare
 			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
-			if($query){
+			  //if($query){
+			if	(mysli_query($conn, $sql)){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-				$mail = new PHPMailer(true);
+				//$mail = new PHPMailer(true);
 	
 				try {
+				  $mail = new PHPMailer(true);	
 				  $mail->SMTPAuth   = true;                  // sblocchi SMTP 
 				  $mail->SMTPSecure = "ssl";                 // metti prefisso per il server
 				  $mail->Host       = "smtp.gmail.com";      // metti il tuo domino es(gmail) 
@@ -38,7 +48,8 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->AddAddress($_SESSION['email']);
 				  $mail->SetFrom("civicsense18@gmail.com");
 				  $mail->Subject = 'Nuova Segnalazione';
-				  $mail->Body = "Salve team$row['team'], ci è arrivata una nuova segnalazione e vi affido il compito di risoverla"; //Messaggio da inviare
+				 // $mail->Body = "Salve team$row['team'], ci è arrivata una nuova segnalazione e vi affido il compito di risoverla"; //Messaggio da inviare
+				  $mail->Body = "Salve team {$row['team']}, ci è arrivata una nuova segnalazione e vi affido il compito di risolverla"; //Messaggio da inviare
 				  $mail->Send();
 				  echo "Message Sent OK";
 				} catch (phpmailerException $e) {
@@ -51,11 +62,13 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 		//da team a ente e utente
 		else if($row['stato']=="In risoluzione" && $stato=="Risolto"){
 			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $id";
-			if($query){
+			  //if($query){
+            if(mysqli_query($conn, $sql)){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-				$mail = new PHPMailer(true);
+				//$mail = new PHPMailer(true);
 	
 				try {
+				  $mail = new PHPMailer(true);	
 				  $mail->SMTPAuth   = true;                  // sblocchi SMTP 
 				  $mail->SMTPSecure = "ssl";                 // metti prefisso per il server
 				  $mail->Host       = "smtp.gmail.com";      // metti il tuo domino es(gmail) 
@@ -65,10 +78,12 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Username   = "$_SESSION['email']";  			// DOMINIO username
 				  $mail->Password   = "$_SESSION['pass']";            // DOMINIO password
 				  $mail->AddAddress('civicsense18@gmail.com');//ente
-				  $mail->AddAddress("$row['email']");//utente
+				  //$mail->AddAddress("$row['email']");//utente
+				  $mail->AddAddress($row['email']); // Utente
 				  $mail->SetFrom("$_SESSION['email']");
 				  $mail->Subject = "Segnalazione risolta";
-				  $mail->Body = "Il problema presente in $row['via'] è stata risolta"; //Messaggio da inviare
+				  //$mail->Body = "Il problema presente in $row['via'] è stata risolta"; //Messaggio da inviare
+				  $mail->Body = "Il problema presente in {$row['via']} è stata risolta"; //Messaggio da inviare
 				  $mail->Send();
 				  echo "Message Sent OK";
 				} catch (phpmailerException $e) {
@@ -84,6 +99,8 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 		else{
 			echo "Operazione non disponibile";
 		}
+	} else {
+		echo " Nessuna segnalazione trovata con l'ID specificato";
 	}
 	mysqli_close($conn);
 }
