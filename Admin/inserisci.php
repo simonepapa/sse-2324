@@ -37,10 +37,11 @@
 
   </div>
 
-  <form method="post" action="inserisci.php" style=" margin-top:5%; margin-left:5%;">
+  <!-- <form method="post" action="inserisci.php" style=" margin-top:5%; margin-left:5%;">-->
+  <form method="post" action="inserisci.php" style=" margin-top:5%; margin-left:5%;" enctype="multipart/form-data">
     <b>DATA INVIO: <input type="date" name="data"><br><br></b>
     <b> ORA INVIO: </b> <input type="time" name="ora"><br><br></b>
-    <b> VIA (VIA NOMEVIA, N CIVICO, CAP, PROVINCIA (ES: PULSANO O TARANTO), TA, ITALIA: <input type="text"
+    <b> VIA (VIA NOMEVIA, N CIVICO, CAP, PROVINCIA (ES: PULSANO O TARANTO), TA, ITALIA: )<input type="text"
         name="via"><br><br></b>
     <b> DESCRIZIONE: <input type="text" name="descr"><br><br></b>
     <!-- VULNERABILITY: File upload -->
@@ -62,8 +63,8 @@
   </form>
 
   <?php
-
-$conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
+// INSTEAD OF THIS LET TRY TO CHANGE THE CODE FOR THE POSSIBLE VULNERABILITIES 
+   /*$conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
 
   $data = (isset($_POST['data'])) ? $_POST['data'] : null;
   $ora = (isset($_POST['ora'])) ? $_POST['ora'] : null;
@@ -110,7 +111,52 @@ $long=stripslashes($long);
   if ($result) {
     echo "<center> inserimento avvenuto. </center>";
 
-  }
+  }*/
+
+//THE CORRECT CODE IS DOWN AND MORE SECURE 
+$conn = mysqli_connect("localhost", "id8503350_civicsense", "civicsense", "id8503350_civicsense") or die("Connessione non riuscita: " . mysqli_connect_error());
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = isset($_POST['data']) ? mysqli_real_escape_string($conn, stripslashes($_POST['data'])) : null;
+    $ora = isset($_POST['ora']) ? mysqli_real_escape_string($conn, stripslashes($_POST['ora'])) : null;
+    $via = isset($_POST['via']) ? mysqli_real_escape_string($conn, stripslashes($_POST['via'])) : null;
+    $descr = isset($_POST['descr']) ? mysqli_real_escape_string($conn, stripslashes($_POST['descr'])) : null;
+    $email = isset($_POST['email']) ? mysqli_real_escape_string($conn, stripslashes($_POST['email'])) : null;
+    $lat = isset($_POST['lat']) ? mysqli_real_escape_string($conn, stripslashes($_POST['lat'])) : null;
+    $long = isset($_POST['long']) ? mysqli_real_escape_string($conn, stripslashes($_POST['long'])) : null;
+    $tipo = isset($_POST['tipo']) ? mysqli_real_escape_string($conn, stripslashes($_POST['tipo'])) : null;
+
+    // Handling file upload securely
+    $allowed_mime_types = ['image/png', 'image/jpg', 'image/jpeg'];
+    $file_tmp_path = $_FILES['foto']['tmp_name'];
+    $file_mime_type = mime_content_type($file_tmp_path);
+
+    if ($_FILES['foto']['error'] == UPLOAD_ERR_OK && in_array($file_mime_type, $allowed_mime_types)) {
+        $foto = file_get_contents($file_tmp_path);
+    } else {
+        $foto = null;
+        echo "<center>Formato del file non supportato.</center>";
+    }
+
+    if ($data && $ora && $via && $descr && $email && $lat && $long && $tipo && $foto) {
+        $sql = "INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'ssssssidd', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
+        $result = mysqli_stmt_execute($stmt);
+
+        if ($result) {
+            echo "<center>Inserimento avvenuto.</center>";
+        } else {
+            echo "<center>Errore durante l'inserimento: " . mysqli_error($conn) . "</center>";
+        }
+
+        mysqli_stmt_close($stmt);
+    } else {
+        echo "<center>Tutti i campi sono obbligatori.</center>";
+    }
+}
+
+mysqli_close($conn);
 
 
 
