@@ -31,7 +31,7 @@
 
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href=""> Area riservata</a>
+    <a class="navbar-brand me-1" href=""> Area riservata</a>
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
       <i class="fas fa-bars"></i>
     </button>
@@ -48,11 +48,11 @@
 
     <!-- INIZIO LOGOUT -->
 
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-      <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow">
+    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+      <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart">
           <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -103,7 +103,7 @@
 
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+        <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false" href="#">
           <i class="fas fa-fw fa-folder"></i>
           <span>Segnalazioni</span>
@@ -205,15 +205,7 @@
                 $selezione = mysqli_query($conn, "SELECT email_t, codice FROM team") or die(mysqli_error($conn));
 
                 if ($selezione) {
-                  function sanitize_content($conn, $content)
-                  {
-                    $cont = stripslashes($content);
-                    $cont = strip_tags($cont);
-                    $cont = mysqli_real_escape_string($conn, $cont);
-                    $cont = htmlentities($cont);
 
-                    return $cont;
-                  }
 
                   while ($array = mysqli_fetch_assoc($selezione)) {
                     $email = sanitize_content($conn, $array["email_t"]);
@@ -270,7 +262,8 @@
               <b>E-MAIL TEAM:</b> <input type="email" name="email"><br><br>
               <b>NOMI E COGNOMI DEI COMPONENTI:</b> <input type="text" name="nomi"><br><br>
               <b>NUMERO DI COMPONENTI: </b> <input type="number" name="numero"><br><br>
-              <b>PASSWORD:</b> <input type="password" name="password"><br>
+              <!-- VULNERABILITY: Autocomplete -->
+              <b>PASSWORD:</b> <input type="password" name="password" autocomplete="false"><br>
 
               <input type="submit" name="submit3" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
             </form>

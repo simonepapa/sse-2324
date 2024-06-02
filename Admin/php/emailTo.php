@@ -35,7 +35,7 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Mailer = "smtp";
 				  $mail->Username   = "civicsense18@gmail.com";     // DOMINIO username
 				  $mail->Password   = "c1v1csense2019";            // DOMINIO password
-				  $mail->AddAddress("$_SESSION['email']");
+				  $mail->AddAddress($_SESSION['email']);
 				  $mail->SetFrom("civicsense18@gmail.com");
 				  $mail->Subject = 'Nuova Segnalazione';
 				  $mail->Body = "Salve team$row['team'], ci è arrivata una nuova segnalazione e vi affido il compito di risoverla"; //Messaggio da inviare

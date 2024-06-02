@@ -1,8 +1,8 @@
 <?php
+$env = parse_ini_file('../.env');
+$conn = mysqli_connect ("localhost", "root", $env['DB_EMPTY_PASSWORD']) or die ("Connessione non riuscita"); 
 
-$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-
-mysql_select_db ("civicsense") or die ("DataBase non trovato"); 
+mysqli_select_db ($conn,"civicsense") or die ("DataBase non trovato"); 
 
 
 $id = (isset($_POST['id'])) ? $_POST['id'] : null;
@@ -14,11 +14,11 @@ if ($id && $stato !== null) {
 
  $query = ("UPDATE segnalazioni SET stato = $stato WHERE id = $id");
 
-$result = mysql_query($query);	
+$result = mysqli_query($conn,$query);	
 
 if($result){
 
-	while($row = mysql_fetch_assoc($result)) {
+	while($row = mysqli_fetch_assoc($result)) {
 
 		if ($id == $row['id']){
 	

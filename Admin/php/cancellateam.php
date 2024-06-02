@@ -1,8 +1,10 @@
 <?php
-$cod=mysqli_real_escape_string($cod);
-$cod=stripslashes($cod);
+
 
 $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+
+$cod=mysqli_real_escape_string($conn,$cod);
+$cod=stripslashes($cod);
 
 $cod = (isset($_POST['cod'])) ? $_POST['cod'] : null;
 
@@ -12,11 +14,21 @@ if ($cod == null) {
 echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</center></p>");
 }
 elseif ($cod !== null){
-	$resultC = mysqli_query($conn,"SELECT * FROM team WHERE codice =' $cod'");
+	$query = "SELECT * FROM team WHERE codice = ? ";
+	$stmt=$mysqli->prepare($query);
+	$stmt->bind_param('i',$codice);
+	$stmt->execute();
+	$resultC= $stmt->get_result();
+
+
 	if($resultC){
 		$row = mysqli_fetch_assoc($resultC);
 		if($cod == $row['codice']){
 			$query = "DELETE FROM team WHERE codice = '$cod'";
+			$stmt=$mysqli->prepare($query);
+			$stmt->bind_param('i',$codice);
+			$stmt->execute();
+			$resultC= $stmt->get_result();
 
 			$result = mysqli_query($conn,$query);	
 
@@ -31,4 +43,8 @@ elseif ($cod !== null){
 }
 
 
-?>
+
+
+/*
+Associare un parametro ? a una variabile con bind_param protegge dalle SQL injection perché il valore della variabile non viene trattato come parte del comando SQL stesso. Invece, viene passato al database in un formato sicuro e separato, che impedisce l'inserimento di codice SQL dannoso. Vediamo un esempio concreto per illustrare questo concetto.
+*/

@@ -30,25 +30,25 @@
 <!-- Navbar -->
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="index.html"> Area Riservata </a>
+    <a class="navbar-brand me-1" href="index.html"> Area Riservata </a>
     <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!--Logout-->
-    <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-        <ul class="navbar-nav ml-auto ml-md-0">
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-user-circle fa-fw"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="login.php" data-toggle="modal" data-target="#logoutModal"> Logout </a>
-                </div>
-            </li>
-        </ul>
-    </form>
-
+ <!--Logout-->     
+ <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             <i class="fas fa-user-circle fa-fw"></i>
+           </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+            <a class="dropdown-item" href="login.php" data-toggle="modal" data-target="#logoutModal" > Logout </a>
+          </div>
+        </li>
+    </ul>
+ </form>
+ 
 </nav>
 
 <div id="wrapper">
@@ -63,28 +63,29 @@
             </a>
         </li>
 
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Segnalazioni</span>
-            </a>
-            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-                <a class="dropdown-item" href="segnalazionii.php"><center><b>INDICE SEGNALAZIONI</b></center></a>
-                <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
-                <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a>
-                <a class="dropdown-item" href="segnalazionistrade.php">Strade e marciapiedi</a>
-                <a class="dropdown-item" href="segnalazionisemafori.php">Segnaletica e semafori</a>
-                <a class="dropdown-item" href="segnalazioniilluminazione.php"> Illuminazione pubblica</a>
-            </div>
-        </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="team.php">
-                <i class="fas fa-fw fa-folder"></i>
-                <span>Team</span></a>
-        </li>
-
-    </ul>
+   <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-fw fa-folder"></i>
+            <span >Segnalazioni</span>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="pagesDropdown" >
+		   <a class="dropdown-item" href="segnalazionii.php"><center><b>INDICE SEGNALAZIONI</b></center></a>
+            <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
+            <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a> 
+			<a class="dropdown-item" href="segnalazionistrade.php">Strade e marciapiedi</a>
+            <a class="dropdown-item" href="segnalazionisemafori.php">Segnaletica e semafori</a> 
+			<a class="dropdown-item" href="segnalazioniilluminazione.php"> Illuminazione pubblica</a> 
+          </div>
+      </li>
+		
+	   <li class="nav-item dropdown">
+          <a class="nav-link " href="team.php" >
+          <i class="fas fa-fw fa-folder"></i>
+          <span>Team</span></a>	
+      </li>    
+		  
+</ul>
 
     <div id="content-wrapper">
         <div class="container-fluid">
@@ -100,31 +101,33 @@
             <!-- Icon Cards-->
             <div class="row" style="margin-left:15%; margin-top:10%;">
 
-                <a href="team.php">
-                    <div class="col-lg-4 col-sm-6 portfolio-item">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="img/team.jpg" alt="">
-                            <div class="card-body">
-                                <h4 class="mr-5" style="margin-top: -30px;">
-                                    <a href="team.php" style="color:black">Team <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+    <a href="team.php">
 
-                <a href="segnalazionii.php">
-                    <div class="col-lg-4 col-sm-6 portfolio-item">
-                        <div class="card h-100">
-                            <img class="card-img-top" src="img/segnalazioni.jpg" alt="">
-                            <div class="card-body">
-                                <h4 class="mr-5" style="margin-top: -30px;">
-                                    <a href="segnalazionii.php" style="color:black"> Segnalazioni <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
-                                </h4>
-                            </div>
-                        </div>
-                    </div>
-                </a>
+        <div class="col-lg-4 col-sm-6 portfolio-item" >
+          <div class="card h-100" style="   ">
+            <img class="card-img-top" src="img/team.jpg" alt="">
+            <div class="card-body">
+              <h4 class="me-5" style="margin-top: -30px;">
+                <a href="team.php" style="color:black">Team <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
+              </h4>
+            </div>
+          </div>
+        </div>
+    </a>
+    
+    <a href="segnalazionii.php">
+
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100" style="   ">
+            <img class="card-img-top" src="img/segnalazioni.jpg" alt="">
+            <div class="card-body">
+              <h4 class="me-5" style="margin-top: -30px;"> <br>
+                <a href="segnalazionii.php" style="color:black"> Segnalazioni <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
+              </h4>
+            </div>
+          </div>
+        </div>
+    </a>
 
             </div>
             <!-- /#wrapper -->

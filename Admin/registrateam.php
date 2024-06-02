@@ -40,13 +40,15 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                    <!-- VULNERABILITY: Autocomplete -->
+                    <input type="password" name="password" autocomplete="false" id="inputPassword" class="form-control" placeholder="Password" required="required">
                     <label for="inputPassword">Password</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
+                    <!-- VULNERABILITY: Autocomplete -->
+                    <input type="password" id="confirmPassword" autocomplete="false" class="form-control" placeholder="Confirm password" required="required">
                     <label for="confirmPassword">Conferma la password</label>
                   </div>
                 </div>
@@ -61,7 +63,7 @@
 <?php
 
 $conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); 
+mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato"); 
 
 
 $email = (isset($_POST['email'])) ? $_POST['email'] : null;
@@ -73,9 +75,9 @@ if ($email && $pass !== null) {
 
  $query = ("UPDATE team SET password = '$pass' WHERE email_t = '$email'");
 
-$result = mysqli_query($query);	
+$result = mysqli_query($conn, $query);	
 
-if($query){
+if($result){
 	echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
 } 
 }	

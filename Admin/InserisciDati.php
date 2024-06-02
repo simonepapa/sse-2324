@@ -1,11 +1,12 @@
 <?php
-$conn = new MySQLi("localhost", "root", "", "civicsense");
+$env = parse_ini_file('../.env');
+$conn = new MySQLi("localhost", "root", $env['DB_EMPTY_PASSWORD'], "civicsense");
 
 $upload_path = 'jpeg/';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']);
-	$sanitized_imagetmp_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['tmp_name']);
+	$sanitized_image_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['name']); // To put in DB
+	$sanitized_imagetmp_name = preg_replace("/[^a-zA-Z0-9]+/", "", $_FILES['image']['tmp_name']); // To move file
 
 	$file_path = $upload_path . $sanitized_image_name;
 	$sanitized_file_path = preg_replace("/[^a-zA-Z0-9]+/", "", $file_path);
@@ -31,10 +32,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lng = floatval($lng);
 
 	try {
+		// This file is not used
+		// VULNERABILITY: File upload, Path Manipulation
 		move_uploaded_file($sanitized_imagetmp_name, $sanitized_file_path);
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
-		$stmt = $mysqli->prepare($query);
+		$stmt = mysqli_prepare($conn, $query);
 		//Bind parameters
 		$stmt->bind_param('ssbsidd', $via, $descrizione, $sanitized_image_name, $email, $tipo, $lat, $lng);
 		//Execute the statement
