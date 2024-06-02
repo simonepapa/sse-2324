@@ -45,6 +45,7 @@ $token = $_SESSION['token'];
           </div>
           <div class="form-group">
             <div class="form-label-group">
+              <!-- VULNERABILITY: Autocomplete -->
               <input type="password" id="inputPassword" autocomplete="false" name="password" class="form-control" placeholder="Password"
                 required="required">
               <label for="inputPassword"> Password </label>

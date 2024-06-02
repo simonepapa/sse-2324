@@ -40,12 +40,14 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
+                    <!-- VULNERABILITY: Autocomplete -->
                     <input type="password" name="password" autocomplete="false" id="inputPassword" class="form-control" placeholder="Password" required="required">
                     <label for="inputPassword">Password</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
+                    <!-- VULNERABILITY: Autocomplete -->
                     <input type="password" id="confirmPassword" autocomplete="false" class="form-control" placeholder="Confirm password" required="required">
                     <label for="confirmPassword">Conferma la password</label>
                   </div>
@@ -61,7 +63,7 @@
 <?php
 
 $conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); 
+mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato"); 
 
 
 $email = (isset($_POST['email'])) ? $_POST['email'] : null;

@@ -32,6 +32,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lng = floatval($lng);
 
 	try {
+		// This file is not used
+		// VULNERABILITY: File upload, Path Manipulation
 		move_uploaded_file($sanitized_imagetmp_name, $sanitized_file_path);
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
