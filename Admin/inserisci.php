@@ -51,8 +51,8 @@ inserisci segnalazione
     <option value="1">SEGNALAZIONI AREE VERDI</option>
     <option value="2">RIFIUTI E PULIZIA STRADALE</option>
     <option value="3">STRADE E MARCIAPIEDI</option>
-     <option value="4">SEGNALETICA E SEMAFORI</option>
-      <option value="4">ILLUMINAZIONE PUBBLICA</option>
+    <option value="4">SEGNALETICA E SEMAFORI</option>
+    <option value="4">ILLUMINAZIONE PUBBLICA</option>
    </select>
   
 <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
@@ -61,7 +61,7 @@ inserisci segnalazione
 
 <?php
 
- $conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
 
 $data = (isset($_POST['data'])) ? $_POST['data'] : null;
 $ora = (isset($_POST['ora'])) ? $_POST['ora'] : null;
@@ -73,11 +73,30 @@ $lat = (isset($_POST['lat'])) ? $_POST['lat'] : null;
 $long = (isset($_POST['long'])) ? $_POST['long'] : null;
 $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : null;
 
+$data=mysqli_real_escape_string($conn,$data);
+$data=stripslashes($data);
+$ora=mysqli_real_escape_string($conn,$ora);
+$ora=stripslashes($ora);
+$via=mysqli_real_escape_string($conn,$via);
+$via=stripslashes($via);
+$email=mysqli_real_escape_string($conn,$email);
+$email=stripslashes($email);
+$lat=mysqli_real_escape_string($conn,$lat);
+$lat=stripslashes($lat);
+$long=mysqli_real_escape_string($conn,$long);
+$long=stripslashes($long);
+
+
+
         $sql = "INSERT INTO segnalazioni
             (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
             VALUES
             ('$data','$ora', '$via', '$descr', '$foto', '$email', '$tipo', '$lat', '$long') ";
-        $result = mysqli_query($conn,$sql);
+         $stmt=mysqli_prepare($conn,$sql);
+         $stmt->bind_param('ssssbsidd',$data,$ora, $via, $descrizione, $img_name, $email, $tipo, $lat, $long);
+         $stmt->execute();
+         $result = $stmt->get_result();	
+         $result = mysqli_query($conn,$sql);
 
  if($result){
 echo "<center> inserimento avvenuto. </center>";

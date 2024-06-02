@@ -12,6 +12,7 @@ function sanitize_content($conn, $content)
 
     return $cont;
 }
+
 // output data of each row
 while ($row = mysqli_fetch_assoc($sql)) {
     echo "

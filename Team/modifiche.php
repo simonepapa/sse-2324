@@ -9,21 +9,34 @@ require ('phpmailer/class.phpmailer.php');
 include('phpmailer/class.smtp.php');
 $conn = new mysqli ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
+$idS=my_real_escape_string($conn,$idS);
+$idS=stripslashes($idS);
+
 if (isset($_POST['id'])&& isset($_POST['stato'])) {
 	$idS = $_POST['id'];
 	$stato = $_POST['stato'];
 	$email=$_SESSION['email'];
 	$pass=$_SESSION['pass'];
 	
-	$query = "SELECT * FROM segnalazioni WHERE id =$idS";
+	$query = "SELECT * FROM segnalazioni WHERE id = ? ";
+	$stmt=$mysqli->prepare($query);
+	$stmt->bind_param('i',$idS);
+	$stmt->execute();
+	$result= $stmt->get_result();
 	
 	$result = $conn->query($query);		
+
 	
 	if($result){
 		//da team a ente e utente
 		$row = $result->fetch_assoc();
 		if($row['stato']=="In attesa" && $stato=="In risoluzione"){ //confronta stato attuale e quello da modificare
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
+			$sql = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt=$mysqli->prepare($sql);
+			$stmt->bind_param('si',$stato,$idS);
+			$stmt->execute();
+			$result1= $stmt->get_result();
+		
 			$result1 = $conn->query($sql);
 			if($result1){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
@@ -55,7 +68,13 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 		}
 		//da team a ente e utente
 		else if($row['stato']=="In risoluzione" && $stato=="Risolto"){
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
+			$sql = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt=$mysqli->prepare($sql);
+			$stmt->bind_param('si',$stato,$idS);
+			$stmt->execute();
+			$result1= $stmt->get_result();
+
+			
 			$result1 = $conn->query($sql);
 			if($result1){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
