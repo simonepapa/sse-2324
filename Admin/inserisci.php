@@ -105,11 +105,7 @@ $long=stripslashes($long);
             (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
             VALUES
             ('$data','$ora', '$via', '$descr', '$foto', '$email', '$tipo', '$lat', '$long') ";
-         $stmt=mysqli_prepare($conn,$sql);
-         $stmt->bind_param('ssssbsidd',$data,$ora, $via, $descrizione, $img_name, $email, $tipo, $lat, $long);
-         $stmt->execute();
-         $result = $stmt->get_result();	
-         $result = mysqli_query($conn,$sql);
+        $result = mysqli_query($conn,$sql);
 
   if ($result) {
     echo "<center> inserimento avvenuto. </center>";

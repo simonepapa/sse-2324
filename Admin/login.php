@@ -95,7 +95,7 @@ $token = $_SESSION['token'];
       } else {
 
         /* Connessione Database
-        $env = parse_ini_file('../.env');
+        
         $conn = mysqli_connect("localhost", "root", $env['DB_EMPTY_PASSWORD']) or die("Connessione non riuscita"); #connessione a mysql, la pass non la ho xk è scaricato automaticamente
   
         mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db
@@ -108,7 +108,8 @@ $token = $_SESSION['token'];
 */
 
  // Database connection using mysqli to make it more efficient
-  $conn = new mysqli("localhost", "root", "", "civicsense");
+ $env = parse_ini_file('../.env');
+  $conn = new mysqli("localhost", "root", $env['DB_EMPTY_PASSWORD'], "civicsense");
 
  // Check connection
  if ($conn->connect_error) {
