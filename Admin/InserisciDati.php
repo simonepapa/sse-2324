@@ -1,5 +1,6 @@
 <?php
-$conn = new MySQLi("localhost", "root", "", "civicsense");
+$env = parse_ini_file('../.env');
+$conn = new MySQLi("localhost", "root", $env['DB_EMPTY_PASSWORD'], "civicsense");
 
 $upload_path = 'jpeg/';
 
