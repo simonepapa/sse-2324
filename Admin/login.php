@@ -92,7 +92,8 @@ $token = $_SESSION['token'];
           echo 'Accesso negato alla sezione riservata.La password è errata!';
         }
       } else {
-        //Connessione Database
+
+        /* Connessione Database
         $conn = mysql_connect("localhost", "root", "") or die("Connessione non riuscita"); #connessione a mysql, la pass non la ho xk è scaricato automaticamente
   
         mysql_select_db("civicsense") or die("DataBase non trovato"); #connessione al db
@@ -102,10 +103,23 @@ $token = $_SESSION['token'];
         $sql = "SELECT * FROM team ";
 
         $result = mysql_query($sql);
+*/
 
+ // Database connection using mysqli to make it more efficient
+  $conn = new mysqli("localhost", "root", "", "civicsense");
 
+ // Check connection
+ if ($conn->connect_error) {
+   die("Connection failed: " . $conn->connect_error);
+ }
 
-        if (mysql_num_rows($result) > 0) {
+ // Prepare and bind
+ $stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
+ $stmt->bind_param("s", $email);
+ $stmt->execute();
+ $result = $stmt->get_result();
+
+  /*      if (mysql_num_rows($result) > 0) {
 
           while ($row = mysql_fetch_assoc($result)) {
             if ($password != $row["password"] || $email != $row["email_t"]) {
@@ -126,9 +140,30 @@ $token = $_SESSION['token'];
       }
 
 
-
+*/
     }
   }
 
+  if ($result->num_rows > 0) {
+    $row = $result->fetch_assoc();
+
+    // Verifying the password
+    if (password_verify($password, $row["password"])) {
+        $_SESSION['email'] = $email;
+        $_SESSION['idT'] = $row['codice'];
+        echo 'Accesso consentito area riservata (TEAM)';
+        header("Location: http://localhost/Ingegneria/Team/index.php");
+        exit();
+    } else {
+        echo 'ATTENZIONE: La password inserita non è corretta!';
+     }
+  }
+ else {
+    echo 'ATTENZIONE: La email inserita non è corretta!';
+    }
+  }
+
+$stmt->close();
+$conn->close();
 
   ?>

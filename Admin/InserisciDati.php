@@ -35,19 +35,43 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$query = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`,`tipo`,`latitudine`,`longitudine`) 
 			VALUES (CURRENT_DATE,CURRENT_TIME,?,?,?,?,?,?,?)";
 		$stmt = $mysqli->prepare($query);
+		//Bind parameters
 		$stmt->bind_param('ssbsidd', $via, $descrizione, $sanitized_image_name, $email, $tipo, $lat, $lng);
+		//Execute the statement
 		$stmt->execute();
-		$result = $stmt->get_result();
-		if ($result) {
-			echo "Inserimento dei dati completato";
-		} else {
-			echo "Errore nell'inserimento dei dati";
-		}
 
-	} catch (Exception $e) {
-		$e->getMessage();
-	}
-	$conn->close();
+		
+	               /*	$result = $stmt->get_result();
+	                  	if ($result) {
+	              		echo "Inserimento dei dati completato";
+	                 	} else {
+	                 		echo "Errore nell'inserimento dei dati";
+	                     	}
+
+                        	} catch (Exception $e) {
+                        		$e->getMessage();
+	                              }
+	                         $conn->close();
+                               }
+
+                        ?> */
+
+// Check if the query was successful
+if ($stmt->affected_rows > 0) {
+	echo "Inserimento dei dati completato";
+} else {
+	echo "Errore nell'inserimento dei dati";
 }
 
+// Close the statement
+$stmt->close();
+
+} catch (Exception $e) {
+// Handle exceptions
+echo "Errore: " . $e->getMessage();
+}
+
+// Close the connection
+$conn->close();
+}
 ?>
