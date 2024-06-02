@@ -18,7 +18,7 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="vendor/datatables/datatables.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -31,16 +31,16 @@
 <!-- Navbar -->
  <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand mr-1" href="index.html"> Area Riservata </a>
+      <a class="navbar-brand me-1" href="index.html"> Area Riservata </a>
      <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
      </button>
 
  <!--Logout-->     
- <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -112,7 +112,7 @@
           <div class="card h-100" style="   ">
             <img class="card-img-top" src="img/team.jpg" alt="">
             <div class="card-body">
-              <h4 class="mr-5" style="margin-top: -30px;">
+              <h4 class="me-5" style="margin-top: -30px;">
                 <a href="team.php" style="color:black">Team <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -126,7 +126,7 @@
           <div class="card h-100" style="   ">
             <img class="card-img-top" src="img/segnalazioni.jpg" alt="">
             <div class="card-body">
-              <h4 class="mr-5" style="margin-top: -30px;"> <br>
+              <h4 class="me-5" style="margin-top: -30px;"> <br>
                 <a href="segnalazionii.php" style="color:black"> Segnalazioni <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
