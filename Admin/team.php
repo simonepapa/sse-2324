@@ -110,7 +110,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="segnalazionii.php">
-            <center><b>INDICE SEGNALAZIONI</b></center>
+            <div style="text-align: center; font-weight: bold; font-size: 24px; margin-top: 20px;">INDICE SEGNALAZIONI</div>
           </a>
           <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
           <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a>
