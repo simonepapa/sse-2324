@@ -28,16 +28,7 @@ Where  month(datainv) = 01 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc($quer)) {
-        $cont = stripslashes($row['cont']);
-        $cont = strip_tags($cont);
-        $cont = mysqli_real_escape_string($conn, $cont);
-        $cont = htmlentities($cont);
-        echo   "
-	
-		       
-			  ".$cont."  
-
-	"; }}
+        echo sanitize_content($conn, $row['cont']); }}
 	?> ,
 	
 	
@@ -64,16 +55,7 @@ Where month(datainv) = 02 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
 	
     "value2": 15,
@@ -94,16 +76,7 @@ Where month(datainv) = 03 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -123,16 +96,7 @@ Where month(datainv) = 04  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -152,16 +116,7 @@ Where month(datainv) = 05 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -181,16 +136,7 @@ Where month(datainv) = 06 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -210,15 +156,7 @@ Where month(datainv) = 07  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -238,16 +176,7 @@ Where month(datainv) = 08  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -267,16 +196,7 @@ Where month(datainv) = 09  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -296,16 +216,7 @@ Where month(datainv) = 10  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -325,16 +236,7 @@ Where month(datainv) = 11  ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-	"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -354,16 +256,7 @@ Where month(datainv) = 12 ");
 
 if (mysqli_num_rows($quer) > 0) {
     while($row = mysqli_fetch_assoc ($quer)) {
-      $cont = stripslashes($row['cont']);
-      $cont = strip_tags($cont);
-      $cont = mysqli_real_escape_string($conn, $cont);
-      $cont = htmlentities($cont);
-      echo   "
-
-         
-      ".$cont."  
-
-"; }}
+      echo sanitize_content($conn, $row['cont']); }}
 	?> ,
     "value2": 15,
     "value3": 0,
