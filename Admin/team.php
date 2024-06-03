@@ -282,23 +282,24 @@
             
 
 
-            $email = (isset($_POST['email'])) ? $_POST['email'] : null;
-            $nomi = (isset($_POST['nomi'])) ? $_POST['nomi'] : null;
+            $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
+            $nomi = (isset($_POST['nomi'])) ? mysqli_real_escape_string($conn, $_POST['nomi']) : null;
             $numeri = (isset($_POST['numero'])) ? $_POST['numero'] : null;
-            $pass = (isset($_POST['password'])) ? $_POST['password'] : null;
-
+            $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
 
             if (isset($_POST['submit3'])) {
               if ($email && $nomi && $numeri && $pass !== null) {
                 #inserisco i valori salvati dal form nella query di inserimento
-            
+
                 $toinsert = "INSERT INTO team
-			(email_t, npersone, nomi, password)
-			VALUES
-			('$email','$numeri', '$nomi','$pass')";
+                (email_t, npersone, nomi, password)
+                VALUES
+                (?, ?, ?, ?)";
 
-
-                $result = mysqli_query($conn, $toinsert);
+                $stmt = mysqli_prepare($conn, $toinsert);
+                $stmt->bind_param('siss', $email, $numeri, $nomi, $pass);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 if ($result) {
                   echo ("<b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per vedere la tabella aggiornata!</p></b></center>");
