@@ -42,7 +42,7 @@ if ($id !== null && $team !== null) {
     // Check if a valid email address was retrieved
     if ($email_t !== null) {
         // Output the email address as a mailto link
-        echo '<a href="mailto:' . $email_t . '"><center> Clicca qui per mandare un avviso al team. </center></a>';
+        echo '<a href="mailto:' . sanitize_content($conn, $row['id']) . '"><center> Clicca qui per mandare un avviso al team. </center></a>';
     } else {
         echo "Team non trovato.";
     }
