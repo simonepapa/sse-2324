@@ -6,6 +6,8 @@ require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\Exception.php';
 require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\PHPMailer.php';
 require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\SMTP.php';
 
+$env = parse_ini_file('../.env');
+
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 $id = (isset($_POST['id'])) ? $_POST['id'] : null;
@@ -39,13 +41,13 @@ if (isset($_POST['submit'])) {
 							$mail->Host = "smtp-mail.outlook.com";      // metti il tuo domino es(gmail) 
 							$mail->Port = 587;   				// inserisci la porta smtp per il server DOMINIO
 							$mail->SMTPKeepAlive = true;
-							//$mail->Mailer = "smtp";
-							$mail->Username = "civicsense2324@outlook.it";     // DOMINIO username
-							$mail->From = "civicsense2324@outlook.it";     // DOMINIO username
-							$mail->Password = "CivicSense123!";            // DOMINIO password
+							$mail->Username = $env['OUTLOOK_MAIL'];     // DOMINIO username
+							$mail->From = $env['OUTLOOK_MAIL'];     // DOMINIO username
+							$mail->Password = $env['OUTLOOK_PASSWORD'];            // DOMINIO password
+
 							$mail->addAddress($row["email_t"]);
-							$mail->setFrom("civicsense2324@gmail.com");
-							$mail->isHTML(false);
+							$mail->setFrom($env['OUTLOOK_MAIL']);
+							$mail->isHTML(true);
 							$mail->Subject = 'Nuova Segnalazione';
 							$mail->Body = "Salve team$team, vi e' stata incaricata una nuova segnalazione da risolvere."; //Messaggio da inviare
 							if (!$mail->send()) {

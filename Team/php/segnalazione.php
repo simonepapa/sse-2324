@@ -7,7 +7,7 @@ if (isset($_SESSION['idT'])) {
   $team = (isset($_POST['team'])) ? $_POST['team'] : null;
 
   $sql = "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ?";
-  $stmt = $mysqli->prepare($sql);
+  $stmt = mysqli_prepare($conn, $sql);
   $stmt->bind_param('i', $_SESSION['idT']);
   $stmt->execute();
   $resultC = $stmt->get_result();
