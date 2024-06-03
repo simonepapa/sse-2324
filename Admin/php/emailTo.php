@@ -76,7 +76,7 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 
 
 			  //if($query){
-            if(mysqli_query($conn, $sql)){
+            if($result){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
 				//$mail = new PHPMailer(true);
 	
