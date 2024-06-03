@@ -41,14 +41,14 @@
                 <div class="col-md-6">
                   <div class="form-label-group">
                     <!-- VULNERABILITY: Autocomplete -->
-                    <input type="password" name="password" autocomplete="false" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                    <input type="password" name="password" autocomplete="off" id="inputPassword" class="form-control" placeholder="Password" required="required">
                     <label for="inputPassword">Password</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
                     <!-- VULNERABILITY: Autocomplete -->
-                    <input type="password" id="confirmPassword" autocomplete="false" class="form-control" placeholder="Confirm password" required="required">
+                    <input type="password" id="confirmPassword" autocomplete="off" class="form-control" placeholder="Confirm password" required="required">
                     <label for="confirmPassword">Conferma la password</label>
                   </div>
                 </div>

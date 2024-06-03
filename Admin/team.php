@@ -263,7 +263,7 @@
               <b>NOMI E COGNOMI DEI COMPONENTI:</b> <input type="text" name="nomi"><br><br>
               <b>NUMERO DI COMPONENTI: </b> <input type="number" name="numero"><br><br>
               <!-- VULNERABILITY: Autocomplete -->
-              <b>PASSWORD:</b> <input type="password" name="password" autocomplete="false"><br>
+              <b>PASSWORD:</b> <input type="password" name="password" autocomplete="off"><br>
 
               <input type="submit" name="submit3" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
             </form>
