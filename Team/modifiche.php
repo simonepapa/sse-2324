@@ -5,8 +5,13 @@ session_start();
 //classi per l'invio dell'email (PHPMailer 5.2)
 
 
-require ('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\Exception.php';
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\PHPMailer.php';
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\SMTP.php';
+
 $conn = new mysqli ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
 
@@ -58,9 +63,9 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Send();
 				  echo "Message Sent OK";
 				  header("location: http://localhost/Ingegneria/Team/index.php");
-				} catch (phpmailerException $e) {
-					  echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					  echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (\Exception $e) {
 					  echo $e->getMessage(); //Errori da altrove
 				}
 			} 
@@ -95,9 +100,9 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Body = "Il problema presente in ".$row['via']." è stata risolta"; //Messaggio da inviare
 				  $mail->Send();
 				  header("location: http://localhost/Ingegneria/Team/index.php");
-				} catch (phpmailerException $e) {
-					  echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					  echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (\Exception $e) {
 					  echo $e->getMessage(); //Errori da altrove
 				}
 			

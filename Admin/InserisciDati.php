@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	                 		echo "Errore nell'inserimento dei dati";
 	                     	}
 
-                        	} catch (Exception $e) {
+                        	} catch (\Exception $e) {
                         		$e->getMessage();
 	                              }
 	                         $conn->close();
@@ -69,7 +69,7 @@ if ($stmt->affected_rows > 0) {
 // Close the statement
 $stmt->close();
 
-} catch (Exception $e) {
+} catch (\Exception $e) {
 // Handle exceptions
 echo "Errore: " . $e->getMessage();
 }

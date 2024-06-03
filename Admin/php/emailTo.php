@@ -4,9 +4,12 @@ session_start();
 //adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
 //classi per l'invio dell'email (PHPMailer 5.2)
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-require ('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\Exception.php';
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\PHPMailer.php';
+require 'C:\xampp\htdocs\Ingegneria\Admin\phpmailer\SMTP.php';
 
 //$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
@@ -55,9 +58,9 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Body = "Salve team {$row['team']}, ci è arrivata una nuova segnalazione e vi affido il compito di risolverla"; //Messaggio da inviare
 				  $mail->Send();
 				  echo "Message Sent OK";
-				} catch (phpmailerException $e) {
-					  echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					  echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (\Exception $e) {
 					  echo $e->getMessage(); //Errori da altrove
 				}
 			} 
@@ -96,9 +99,9 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Body = "Il problema presente in {$row['via']} è stata risolta"; //Messaggio da inviare
 				  $mail->Send();
 				  echo "Message Sent OK";
-				} catch (phpmailerException $e) {
-					  echo $e->errorMessage(); //Errori da PHPMailer
 				} catch (Exception $e) {
+					  echo $e->errorMessage(); //Errori da PHPMailer
+				} catch (\Exception $e) {
 					  echo $e->getMessage(); //Errori da altrove
 				}
 			
