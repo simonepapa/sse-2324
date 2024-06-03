@@ -111,10 +111,15 @@
         $conn = mysqli_connect("localhost","root","","civicsense") or die("Connessione fallita");
 
         if(isset($_SESSION['idT'])){
-        $sql = "SELECT * FROM segnalazioni WHERE team = ".$_SESSION['idT'];
-        $result = mysqli_query($conn,$sql);
-        if($result){
-          while($row=mysqli_fetch_assoc($result)){
+
+        $sql = "SELECT * FROM segnalazioni WHERE team = ?";
+		    $stmt = $mysqli->prepare($sql);
+		    $stmt->bind_param('i', $_SESSION['idT']);
+		    $stmt->execute();
+		    $resultC = $stmt->get_result();
+
+        if($resultC){
+          while($row=mysqli_fetch_assoc($resultC)){
 
             echo "
             var location = new google.maps.LatLng(".sanitize_content($conn, $row['latitudine']).",".sanitize_content($conn, $row['longitudine']).");

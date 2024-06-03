@@ -6,10 +6,13 @@ mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessio
 if (isset($_SESSION['idT'])) {
   $team = (isset($_POST['team'])) ? $_POST['team'] : null;
 
-  $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = " . sanitize_content($conn, $_SESSION['idT']));
+  $sql = "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ?";
+  $stmt = $mysqli->prepare($sql);
+  $stmt->bind_param('i', $_SESSION['idT']);
+  $stmt->execute();
+  $resultC = $stmt->get_result();
 
-
-  while ($row = mysqli_fetch_assoc($quer)) {
+  while ($row = mysqli_fetch_assoc($resultC)) {
     echo "
     <tr>
      
