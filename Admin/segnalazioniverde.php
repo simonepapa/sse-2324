@@ -304,7 +304,6 @@ Statistiche annuali per le segnalazioni delle aree verdi</div>
 <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
 <div id="chartdiv"></div>
-  <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
 
  <?php include ("php/graficoverde.php"); ?>
 
