@@ -13,23 +13,26 @@ include('phpmailer/class.smtp.php');
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita: " . mysqli_connect_error());
 
 if (isset($_POST['id'])&& isset($_POST['stato'])) {
-	/*$idS = $_POST['id'];
-	$stato = $_POST['stato'];*/
-	$idS = mysqli_real_escape_string($conn, $_POST['id']); // Sanitize input
+
     $stato = mysqli_real_escape_string($conn, $_POST['stato']); // Sanitize input	
 	
-	$query = "SELECT * FROM segnalazioni WHERE id =$idS";
+	$query = "SELECT * FROM segnalazioni WHERE id =? ";
+	$stmt=mysqli_prepare($conn,$query);
+	$stmt->bind_param('i',$id);
+	$stmt->execute();
+	$result = $stmt->get_result();	
 	
-	$result = mysqli_query($conn,$query);	
-
-	//da ente a team
 	
-	          //if($result){      // POSSIBLE VULNERABILITY
      if ($result && mysqli_num_rows($result) > 0) {
 	
 		$row = mysqli_fetch_assoc($result);
 		if($row['stato']=="In attesa" && $stato=="In risoluzione"){ //confronta stato attuale e quello da modificare
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $idS"; //esegui l'aggiornamento
+			$sql = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt=mysqli_prepare($conn,$query);
+			$stmt->bind_param('si',$stato,$id);
+			$stmt->execute();
+			$result = $stmt->get_result();	
+
 			  //if($query){
 			if	(mysli_query($conn, $sql)){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
@@ -61,7 +64,14 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 		}
 		//da team a ente e utente
 		else if($row['stato']=="In risoluzione" && $stato=="Risolto"){
-			$sql = "UPDATE segnalazioni SET stato = '$stato' WHERE id = $id";
+			$sql = "UPDATE segnalazioni SET stato = ? WHERE id = ?"; //esegui l'aggiornamento
+			$stmt=mysqli_prepare($conn,$query);
+			$stmt->bind_param('si',$stato,$id);
+			$stmt->execute();
+			$result = $stmt->get_result();
+
+
+
 			  //if($query){
             if(mysqli_query($conn, $sql)){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
@@ -75,12 +85,12 @@ if (isset($_POST['id'])&& isset($_POST['stato'])) {
 				  $mail->Port       = 465;   				// inserisci la porta smtp per il server DOMINIO
 				  $mail->SMTPKeepAlive = true;
 				  $mail->Mailer = "smtp";
-				  $mail->Username   = "$_SESSION['email']";  			// DOMINIO username
-				  $mail->Password   = "$_SESSION['pass']";            // DOMINIO password
+				  $mail->Username   = "$_SESSION[email]";  			// DOMINIO username
+				  $mail->Password   = "$_SESSION[pass]";            // DOMINIO password
 				  $mail->AddAddress('civicsense18@gmail.com');//ente
 				  //$mail->AddAddress("$row['email']");//utente
 				  $mail->AddAddress($row['email']); // Utente
-				  $mail->SetFrom("$_SESSION['email']");
+				  $mail->SetFrom("$_SESSION[email]");
 				  $mail->Subject = "Segnalazione risolta";
 				  //$mail->Body = "Il problema presente in $row['via'] è stata risolta"; //Messaggio da inviare
 				  $mail->Body = "Il problema presente in {$row['via']} è stata risolta"; //Messaggio da inviare

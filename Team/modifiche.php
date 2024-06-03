@@ -9,8 +9,7 @@ require ('phpmailer/class.phpmailer.php');
 include('phpmailer/class.smtp.php');
 $conn = new mysqli ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
-$idS=my_real_escape_string($conn,$idS);
-$idS=stripslashes($idS);
+
 
 if (isset($_POST['id'])&& isset($_POST['stato'])) {
 	$idS = $_POST['id'];

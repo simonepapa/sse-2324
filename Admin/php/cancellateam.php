@@ -3,9 +3,6 @@
 
 $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
-$cod=mysqli_real_escape_string($conn,$cod);
-$cod=stripslashes($cod);
-
 $cod = (isset($_POST['cod'])) ? $_POST['cod'] : null;
 
 if (isset($_POST['submit2'])){   
@@ -24,13 +21,11 @@ elseif ($cod !== null){
 	if($resultC){
 		$row = mysqli_fetch_assoc($resultC);
 		if($cod == $row['codice']){
-			$query = "DELETE FROM team WHERE codice = '$cod'";
+			$query = "DELETE FROM team WHERE codice = ? ";
 			$stmt=$mysqli->prepare($query);
 			$stmt->bind_param('i',$codice);
 			$stmt->execute();
 			$resultC= $stmt->get_result();
-
-			$result = mysqli_query($conn,$query);	
 
 			if($query){
 				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
