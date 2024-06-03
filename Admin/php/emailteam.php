@@ -26,27 +26,34 @@ if (isset($_POST['submit'])) {
 				if ($result) {
 
 					echo ('<center><b>Aggiornamento avvenuto con successo.</b></center>');
-					$mail = new PHPMailer();
+					$mail = new PHPMailer(true);
 
 					try {
 						$query1 = ("SELECT * FROM team WHERE codice = $team");
 						$result1 = mysqli_query($conn, $query1);
 						if ($result1) {
 							$row = mysqli_fetch_assoc($result1);
+							$mail->isSMTP();
 							$mail->SMTPAuth = true;                  // sblocchi SMTP 
-							$mail->SMTPSecure = "ssl";                 // metti prefisso per il server
-							$mail->Host = "smtp.gmail.com";      // metti il tuo domino es(gmail) 
-							$mail->Port = 465;   				// inserisci la porta smtp per il server DOMINIO
+							$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;                 // metti prefisso per il server
+							$mail->Host = "smtp-mail.outlook.com";      // metti il tuo domino es(gmail) 
+							$mail->Port = 587;   				// inserisci la porta smtp per il server DOMINIO
 							$mail->SMTPKeepAlive = true;
-							$mail->Mailer = "smtp";
-							$mail->Username = "civicsense2019@gmail.com";     // DOMINIO username
-							$mail->Password = "c1v1csense2019";            // DOMINIO password
-							$mail->AddAddress($row["email_t"]);
-							$mail->SetFrom("civicsense2019@gmail.com");
+							//$mail->Mailer = "smtp";
+							$mail->Username = "civicsense2324@outlook.it";     // DOMINIO username
+							$mail->From = "civicsense2324@outlook.it";     // DOMINIO username
+							$mail->Password = "CivicSense123!";            // DOMINIO password
+							$mail->addAddress($row["email_t"]);
+							$mail->setFrom("civicsense2324@gmail.com");
+							$mail->isHTML(false);
 							$mail->Subject = 'Nuova Segnalazione';
 							$mail->Body = "Salve team$team, vi e' stata incaricata una nuova segnalazione da risolvere."; //Messaggio da inviare
-							$mail->Send();
-							echo "<center><b>Messaggio inviato.</b></center>";
+							if (!$mail->send()) {
+								echo 'Messaggio non inviato: ' . $mail->ErrorInfo;
+							} else {
+								echo "<center><b>Messaggio inviato.</b></center>";
+							}
+							$mail->smtpClose();
 						}
 					} catch (Exception $e) {
 						echo $e->errorMessage(); //Errori da PHPMailer
