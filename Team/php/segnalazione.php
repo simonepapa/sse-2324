@@ -1,45 +1,47 @@
 <?php
-$conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
 
-mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db
+mysql_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
 
-if (isset($_SESSION['idT'])) {
-  $team = (isset($_POST['team'])) ? $_POST['team'] : null;
+if(isset($_SESSION['idT'])){
+	$upload_path = '../Admin/img/';
+  
 
-  $sql = "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ?";
-  $stmt = mysqli_prepare($conn, $sql);
-  $stmt->bind_param('i', $_SESSION['idT']);
-  $stmt->execute();
-  $resultC = $stmt->get_result();
+$team = (isset($_POST['team'])) ? $_POST['team'] : null;
 
-  while ($row = mysqli_fetch_assoc($resultC)) {
-    echo "
+
+
+    $quer = mysql_query ("SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ".$_SESSION['idT'] );
+  
+
+    while($row = mysql_fetch_assoc($quer)) {
+        echo "
     <tr>
      
-                <td>" . sanitize_content($conn, $row['id']) . " <br></td>
+                <td>".$row['id']." <br></td>
                 
-                <td>" . sanitize_content($conn, $row['datainv']) . " <br></td> 
+                <td>".$row['datainv']." <br></td> 
                 
-              <td>" . sanitize_content($conn, $row['orainv']) . "<br></td>
+              <td>".$row['orainv']."<br></td>
 
-               <td>" . sanitize_content($conn, $row['via']) . "<br></td>
+               <td>".$row['via']."<br></td>
 
-                <td>" . sanitize_content($conn, $row['descrizione']) . "<br></td>
+                <td>".$row['descrizione']."<br></td>
 
-                <td><img width='200px' height='200px' src=data:image/jpeg;base64," . sanitize_content($conn, base64_encode($row['foto'])) . "><br></td>
+                 <td><img width='200px' height='200px' src=".$upload_path.$row['foto']."><br></td>
 				  
-				        <td>" . sanitize_content($conn, $row['tipo']) . "<br></td>
+				   <td>".$row['tipo']."<br></td>
 
-                <td>" . sanitize_content($conn, $row['stato']) . "<br></td>
+                   <td>".$row['stato']."<br></td>
 
-                   <td>" . sanitize_content($conn, $row['gravita']) . "<br></td>
+                   <td>".$row['gravita']."<br></td>
                
           </tr> ";
+    }
+
+
+
   }
-
-
-
-}
 
 
 

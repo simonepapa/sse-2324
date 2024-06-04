@@ -18,16 +18,21 @@ var chart = AmCharts.makeChart("chartdiv", {
 	
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 01  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
 	
 	
@@ -45,16 +50,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 02  AND tipo = '5'");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
 	
     "value2": 15,
@@ -66,16 +76,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 03  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -86,16 +101,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 04  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -106,16 +126,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 05  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -126,16 +151,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 06  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -146,16 +176,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 07  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -166,16 +201,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 08  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -186,16 +226,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 09  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -206,16 +251,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 10  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -226,16 +276,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 11 AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-        echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+	"; }}
 	?> ,
     "value2": 15,
     "value3": 0,
@@ -246,16 +301,21 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ($conn, "civicsense") or die ("DataBase non trovato");
+$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+mysql_select_db ("civicsense") or die ("DataBase non trovato");
 
-$quer = mysqli_query ($conn, "Select COUNT(*) AS cont
+$quer = mysql_query ("Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 12  AND tipo = '5' ");
 
-if (mysqli_num_rows($quer) > 0) {
-    while($row = mysqli_fetch_assoc ($quer)) {
-      echo sanitize_content($conn, $row['cont']); }}
+if (mysql_num_rows($quer) > 0) {
+    while($row = mysql_fetch_assoc ($quer)) {
+        echo   "
+	
+		       
+			  ".$row['cont']."  
+
+"; }}
 	?> ,
     "value2": 15,
     "value3": 0,

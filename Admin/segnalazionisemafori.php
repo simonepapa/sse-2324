@@ -1,7 +1,4 @@
 <!DOCTYPE html>
-<?php 
-  $env = parse_ini_file('../.env');
-?>
 <html lang="en">
 
   <head>
@@ -21,7 +18,7 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -36,7 +33,7 @@
 
     <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand me-1" href=""> Area riservata</a>
+      <a class="navbar-brand mr-1" href=""> Area riservata</a>
 
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
@@ -54,10 +51,10 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ms-auto ms-md-0">
-        <li class="nav-item dropdown no-arrow dropstart" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -107,7 +104,7 @@
 
 
         <li class="nav-item active">
-          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
         <span>Segnalazioni</span>
           </a>
@@ -169,9 +166,8 @@
         $result = mysqli_query($conn,$sql);
         if($result){
           while($row=mysqli_fetch_assoc($result)){
-
             echo "
-            var location = new google.maps.LatLng(".sanitize_content($conn, $row['latitudine']).",".sanitize_content($conn, $row['longitudine']).");
+            var location = new google.maps.LatLng(".$row['latitudine'].",".$row['longitudine'].");
             var marker = new google.maps.Marker({
               map: map,
               position: location
@@ -195,7 +191,7 @@
     </script>
     
   <script async defer 
-  src="https://maps.googleapis.com/maps/api/js?key=<?php echo $env['GOOGLE_MAPS_API_KEY']; ?>&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
     </script>
   
 			
@@ -238,9 +234,9 @@ Modifica gravità di una segnalazione</div>
 <b>CODICE CANCELLAZIONE DA MODIFICARE: <input type="text" name="idt"><br><br></b>
 <b> INSERISCI LA GRAVITA' MODIFICATA: </b> <select class="text" name="gravit"> 
    
-    <option value="1">Alta</option>
-    <option value="2">Media</option>
-    <option value="3">Bassa</option>
+    <option value="Alta">Alta</option>
+    <option value="Media">Media</option>
+    <option value="Bassa">Bassa</option>
 
 <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
 
@@ -262,19 +258,11 @@ if ($idt && $grav !== null) {
   if($resultC){
     $row = mysqli_fetch_assoc($resultC);
     if($id == $row['id']){
-      // VULNERABILITY: SQL INJECTION
-      //$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
+      $query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
 
-      //$result = mysqli_query($conn,$query); 
+      $result = mysqli_query($conn,$query); 
 
-      $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
-
-      $stmt = mysqli_prepare($conn, $query);
-      $stmt->bind_param('ii', $grav, $idt);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if($result){
+      if($query){
         echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
       } 
     }else{
@@ -302,6 +290,7 @@ Statistiche annuali per le segnalazioni di semafori</div>
 <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
 <div id="chartdiv"></div>
+  <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
 
  <?php include ("php/graficosemafori.php"); ?>
 
@@ -318,8 +307,8 @@ Statistiche annuali per le segnalazioni di semafori</div>
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/datatables.min.js"></script>
-    
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>

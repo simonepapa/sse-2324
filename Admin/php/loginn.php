@@ -11,32 +11,27 @@
 			}
 			else
 			{
-				echo 'Accesso negato alla sezione riservata.La password ï¿½ errata!';
+				echo 'Accesso negato alla sezione riservata.La password è errata!';
 			}
 		}
 		else
 		{
 			//Connessione Database
-			$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-	        mysqli_select_db ($conn,"civicsense") or die ("DataBase non trovato"); #connessione al db
-			
-			$cod=mysqli_real_escape_string($conn,$email);
-			$cod=stripslashes($email);
+			$conn = mysql_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+	        mysql_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
 
-			$sql = 'SELECT * FROM team WHERE email_t = ?';
-			$stmt=mysqli_prepare($conn,$sql);
-			$stmt->bind_param('s',$email);
-			$stmt->execute();
-			$result = $stmt->get_result();	
 
-			if (mysqli_num_rows($result) > 0) {
+			$sql = 'SELECT * FROM team WHERE email_t = ' .$email. ';';
+			$result = mysql_query($sql);	
+
+			if (mysql_num_rows($result) > 0) {
 	   
-	    		while($row = mysqli_fetch_assoc($result)) 
+	    		while($row = mysql_fetch_assoc($result)) 
 				{
 					if($password != $row["password"] || $email != $row["email_t"])
 					{
 						//CODICE JAVASCRIPT
-						echo 'ATTENZIONE: La password o la email inserita non ï¿½ corretta!';
+						echo 'ATTENZIONE: La password o la email inserita non è corretta!';
 					}
 					else if ($password == $row["password"] || $email == $row["email_t"]){
 						echo 'Accesso consentito area riservata (TEAM)';
@@ -44,7 +39,7 @@
 			
 				}
 			}
-			mysqli_close($conn);
+			mysql_close($conn);
 		}
 	}
 	else{

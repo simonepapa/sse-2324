@@ -18,7 +18,7 @@
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
     <!-- Page level plugin CSS-->
-    <link href="vendor/datatables/datatables.min.css" rel="stylesheet">
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -32,7 +32,7 @@
 
 <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-      <a class="navbar-brand me-1" href=""> Area riservata</a>
+      <a class="navbar-brand mr-1" href=""> Area riservata</a>
       <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
         <i class="fas fa-bars"></i>
       </button>
@@ -40,10 +40,10 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ms-auto ms-md-0">
-        <li class="nav-item dropdown no-arrow dropstart" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+ <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+    <ul class="navbar-nav ml-auto ml-md-0">
+        <li class="nav-item dropdown no-arrow" >
+           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
@@ -93,7 +93,7 @@
 
 
         <li class="nav-item active">
-          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-fw fa-folder"></i>
            <span>Segnalazioni</span>
           </a>
@@ -136,6 +136,7 @@
 <script src="//www.amcharts.com/lib/3/themes/light.js"></script>
 
 <div id="chartdiv"></div>
+  <script src='https://code.jquery.com/jquery-1.11.2.min.js'></script>
 
  <?php include ("php/grafico.php"); ?>
 
@@ -151,7 +152,7 @@
           <div class="card h-100" style="border:groove; border-color: black; ">
             <a><img class="card-img-top" src="img/verde.jpg" alt=""></a>
             <div class="card-body">
-              <h4 class="me-5" style="margin-top: 20px;">
+              <h4 class="mr-5" style="margin-top: 20px;">
                 <a href="segnalazioniverde.php" style="color:black"> Segnalazioni su aree verdi <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -165,7 +166,7 @@
           <div class="card h-100" style="border:groove; border-color: black; ">
             <a><img class="card-img-top" src="img/rifiuti.jpg" alt=""></a>
             <div class="card-body">
-              <h4 class="me-5" style="margin-top: -3px;"> <br>
+              <h4 class="mr-5" style="margin-top: -3px;"> <br>
                 <a href="segnalazionirifiuti.php" style="color:black"> Rifiuti e pulizia stradale <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -180,7 +181,7 @@
           <div class="card h-100" style="border:groove; border-color: black; ">
             <a><img class="card-img-top" src="img/strade.jpg" alt=""></a>
             <div class="card-body">
-              <h4 class="me-5" style="margin-top: -3px;"> <br>
+              <h4 class="mr-5" style="margin-top: -3px;"> <br>
                 <a href="segnalazionistrade.php" style="color:black"> Strade e marciapiedi <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -194,7 +195,7 @@
           <div class="card h-100" style="border:groove; border-color: black; margin-top:4%; ">
             <a><img class="card-img-top" src="img/semafori.jpg" alt=""></a>
             <div class="card-body">
-              <h4 class="me-5" style="margin-top: -3px;"> <br>
+              <h4 class="mr-5" style="margin-top: -3px;"> <br>
                 <a href="segnalazionisemafori.php" style="color:black"> Segnaletica e semafori <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -209,7 +210,7 @@
           <div class="card h-100" style="border:groove; border-color: black; margin-top:4%;  ">
             <a><img class="card-img-top" src="img/illum.jpg" alt=""></a>
             <div class="card-body">
-              <h4 class="me-5" style="margin-top: -3px; "> <br>
+              <h4 class="mr-5" style="margin-top: -3px; "> <br>
                 <a href="segnalazioniilluminazione.php" style="color:black"> Illuminazione pubblica <i class="fas fa-angle-right" style="margin-left:3px;"><i class="fas fa-angle-right" style="margin-left:3px;"></i></i></a>
               </h4>
             </div>
@@ -233,8 +234,8 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Page level plugin JavaScript-->
-    <script src="vendor/datatables/datatables.min.js"></script>
-    
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin.min.js"></script>
