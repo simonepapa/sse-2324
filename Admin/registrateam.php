@@ -32,7 +32,7 @@
            
             <div class="form-group">
               <div class="form-label-group">
-                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email " required="required">
+                <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email " required="required">
                 <label for="inputEmail">Email </label>
               </div>
             </div>
@@ -40,13 +40,13 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                    <input type="text" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
                     <label for="inputPassword">Password</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
+                    <input type="text" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
                     <label for="confirmPassword">Conferma la password</label>
                   </div>
                 </div>
@@ -72,8 +72,8 @@ if ($email && $pass !== null) {
 
 
  $query = ("UPDATE team SET password = '$pass' WHERE email_t = '$email'");
-
-$result = mysqli_query($conn,$query);	
+ echo $query;
+ $result = mysqli_query($conn,$query);	
 
 if($query){
 	echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
