@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php 
+  if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+  }
+  
+  $token = $_SESSION['token'];
+?>
 <html lang="en">
 
 <head>
@@ -48,7 +55,7 @@
 
     <!-- INIZIO LOGOUT -->
 
-    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+    <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
       <ul class="navbar-nav ms-auto ms-md-0">
         <li class="nav-item dropdown no-arrow dropstart">
           <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button"
@@ -60,7 +67,7 @@
           </div>
         </li>
       </ul>
-    </form>
+    </div>
 
   </nav>
 
@@ -222,7 +229,7 @@
                 }
                 ?>
                 <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
-
+                <input type="hidden" name="token" value="<?php echo $token; ?>" />
                 <?php include ("php/emailteam.php"); ?>
               </select>
             </form>
@@ -243,6 +250,7 @@
             <form method="post" action="team.php" style=" margin-top:5%; margin-left:5%">
               <b>CODICE TEAM DA ELIMINARE: <input type="text" name="cod"><br><br></b>
               <input type="submit" name="submit2" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+              <input type="hidden" name="token" value="<?php echo $token; ?>" />
             </form>
             <?php include ("php/cancellateam.php"); ?>
 
@@ -266,6 +274,7 @@
               <b>PASSWORD:</b> <input type="password" name="password" autocomplete="off"><br>
 
               <input type="submit" name="submit3" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+              <input type="hidden" name="token" value="<?php echo $token; ?>" />
             </form>
 
 

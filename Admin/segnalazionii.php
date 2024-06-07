@@ -40,7 +40,7 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+ <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <ul class="navbar-nav ms-auto ms-md-0">
         <li class="nav-item dropdown no-arrow dropstart" >
            <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -51,7 +51,7 @@
           </div>
         </li>
     </ul>
- </form>
+ </div>
  
 </nav>
 

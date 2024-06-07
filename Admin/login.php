@@ -48,10 +48,11 @@ $token = $_SESSION['token'];
               <!-- VULNERABILITY: Autocomplete -->
               <input type="password" id="inputPassword" autocomplete="off" name="password" class="form-control" placeholder="Password"
                 required="required">
+                <input type="hidden" name="token" value="<?php echo $token; ?>" />
               <label for="inputPassword"> Password </label>
             </div>
           </div>
-          <input type="hidden" name="token" value="<?php echo $token; ?>" />
+          
           <div class="form-group">
             <div class="checkbox">
               <label>
@@ -166,7 +167,6 @@ $token = $_SESSION['token'];
     }
   }
 
-$stmt->close();
 $conn->close();
 
   ?>

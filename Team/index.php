@@ -1,6 +1,11 @@
 <?php session_start()?>
 <?php 
   $env = parse_ini_file('../.env');
+  if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+  }
+  
+  $token = $_SESSION['token'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +47,7 @@
       
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+ <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <ul class="navbar-nav ms-auto ms-md-0">
         <li class="nav-item dropdown no-arrow dropstart" >
            <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -53,7 +58,7 @@
           </div>
         </li>
     </ul>
- </form>
+ </div>
 </nav>
 
     <!-- finestra avviso-->
@@ -214,6 +219,7 @@ Modifica stato di una segnalazione</div>
     <option value="In risoluzione">In risoluzione</option>
 
 <input type="submit"  class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+<input type="hidden" name="token" value="<?php echo $token; ?>" />
 
     </form>
 

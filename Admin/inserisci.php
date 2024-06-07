@@ -114,7 +114,7 @@ $long=stripslashes($long);
   }*/
 
 //THE CORRECT CODE IS DOWN AND MORE SECURE 
-$conn = mysqli_connect("localhost", "id8503350_civicsense", "civicsense", "id8503350_civicsense") or die("Connessione non riuscita: " . mysqli_connect_error());
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = isset($_POST['data']) ? mysqli_real_escape_string($conn, stripslashes($_POST['data'])) : null;

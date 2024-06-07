@@ -1,4 +1,11 @@
 <!DOCTYPE html>
+<?php 
+  if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+  }
+  
+  $token = $_SESSION['token'];
+?>
 <html lang="en">
 
 <head>
@@ -52,12 +59,14 @@
                   <!-- VULNERABILITY: Autocomplete -->
                   <input type="password" id="confirmPassword" autocomplete="off" class="form-control"
                     placeholder="Confirm password" required="required">
+                    <input type="hidden" name="token" value="<?php echo $token; ?>" />
                   <label for="confirmPassword">Conferma la password</label>
                 </div>
               </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block"> Registrati </button>
+          
         </form>
       </div>
     </div>

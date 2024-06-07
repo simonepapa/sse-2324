@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php 
   $env = parse_ini_file('../.env');
+  if (empty($_SESSION['token'])) {
+    $_SESSION['token'] = bin2hex(random_bytes(32));
+  }
+  
+  $token = $_SESSION['token'];
 ?>
 <html lang="en">
 
@@ -54,7 +59,7 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+ <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <ul class="navbar-nav ms-auto ms-md-0">
         <li class="nav-item dropdown no-arrow dropstart" >
            <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -65,7 +70,7 @@
           </div>
         </li>
     </ul>
- </form>
+ </div>
 </nav>
 
     <!-- finestra avviso-->
@@ -238,6 +243,7 @@ Modifica gravità di una segnalazione</div>
     <option value="3">Bassa</option>
 
 <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+<input type="hidden" name="token" value="<?php echo $token; ?>" />
 
     </form>
 	
@@ -253,7 +259,13 @@ if (isset($_POST['submit'])){
 
 if ($idt && $grav !== null) {
 
-  $resultC = mysqli_query($conn,"SELECT * FROM segnalazioni WHERE tipo = '1'");
+  $first_query = "SELECT * FROM segnalazioni WHERE tipo = 3 AND id = ?";
+
+  $first_stmt = mysqli_prepare($conn, $first_query);
+  $first_stmt->bind_param('i', $idt);
+  $first_stmt->execute();
+  $resultC = $first_stmt->get_result();
+
   if($resultC){
     $row = mysqli_fetch_assoc($resultC);
     if($id == $row['id']){
