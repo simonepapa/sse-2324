@@ -113,6 +113,7 @@
         center:location
       });
       <?php 
+      if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
         $conn = mysqli_connect("localhost","root","","civicsense") or die("Connessione fallita");
 
         if(isset($_SESSION['idT'])){
@@ -136,6 +137,8 @@
           mysqli_close($conn);
         }
       }
+      }
+        
       ?>
       /*var marker = new google.maps.Marker({
               map: map,

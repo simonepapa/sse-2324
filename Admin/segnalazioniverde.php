@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<?php session_start()?>
 <?php 
   $env = parse_ini_file('../.env');
   if (empty($_SESSION['token'])) {
@@ -257,47 +258,50 @@ Modifica gravità di una segnalazione</div>
 	
 <?php
 
-$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
+  $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 
-$idt = (isset($_POST['idt'])) ? $_POST['idt'] : null;
-$grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
+  $idt = (isset($_POST['idt'])) ? $_POST['idt'] : null;
+  $grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
+  
+  if (isset($_POST['submit'])){   
+  
+  if ($idt && $grav !== null) {
+  
+    $first_query = "SELECT * FROM segnalazioni WHERE tipo = 1 AND id = ?";
+  
+    $first_stmt = mysqli_prepare($conn, $first_query);
+    $first_stmt->bind_param('i', $idt);
+    $first_stmt->execute();
+    $resultC = $first_stmt->get_result();
+  
+    if($resultC) {
+      $row = mysqli_fetch_assoc($resultC);
+      // VULNERABILITY: SQL INJECTION
+        //$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
+  
+        //$result = mysqli_query($conn,$query); 
+  
+        $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
+  
+        $stmt = mysqli_prepare($conn, $query);
+        $stmt->bind_param('ii', $grav, $idt);
+        $stmt->execute();
+        $result = $stmt->get_result();
+  
+        if($result){
+          echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
+        } 
+    }else{
+        echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+      }
+  }
+  else {
+    echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
+  }
+  }
+ }
 
-if (isset($_POST['submit'])){   
-
-if ($idt && $grav !== null) {
-
-  $first_query = "SELECT * FROM segnalazioni WHERE tipo = 1 AND id = ?";
-
-  $first_stmt = mysqli_prepare($conn, $first_query);
-  $first_stmt->bind_param('i', $idt);
-  $first_stmt->execute();
-  $resultC = $first_stmt->get_result();
-
-	if($resultC) {
-		$row = mysqli_fetch_assoc($resultC);
-		// VULNERABILITY: SQL INJECTION
-      //$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
-
-      //$result = mysqli_query($conn,$query); 
-
-      $query = "UPDATE segnalazioni SET gravita = ? WHERE id = ?";
-
-      $stmt = mysqli_prepare($conn, $query);
-      $stmt->bind_param('ii', $grav, $idt);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-			if($result){
-				echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-			} 
-	}else{
-			echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
-		}
-}
-else {
-	echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
-}
-}
 
 ?>
 <br><br><br>

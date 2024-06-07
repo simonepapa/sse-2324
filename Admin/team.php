@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<?php 
-  if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
-  }
-  
-  $token = $_SESSION['token'];
+<?php session_start()?>
+<?php
+if (empty($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
+$token = $_SESSION['token'];
 ?>
 <html lang="en">
 
@@ -110,14 +111,15 @@
 
 
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true"
-          aria-expanded="false" href="#">
+        <a class="nav-link dropdown-toggle" id="pagesDropdown" role="button" data-bs-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false" href="#">
           <i class="fas fa-fw fa-folder"></i>
           <span>Segnalazioni</span>
         </a>
         <div class="dropdown-menu" aria-labelledby="pagesDropdown">
           <a class="dropdown-item" href="segnalazionii.php">
-            <div style="text-align: center; font-weight: bold; font-size: 24px; margin-top: 20px;">INDICE SEGNALAZIONI</div>
+            <div style="text-align: center; font-weight: bold; font-size: 24px; margin-top: 20px;">INDICE SEGNALAZIONI
+            </div>
           </a>
           <a class="dropdown-item" href="segnalazioniverde.php">Segnalazione su aree verdi</a>
           <a class="dropdown-item" href="segnalazionirifiuti.php">Rifiuti e pulizia stradale</a>
@@ -206,27 +208,29 @@
               <b>SELEZIONA L'EMAIL DEL TEAM: </b> <select class="text" name="team">
 
                 <?php
+                if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
+                  $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-                $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
+                  $selezione = mysqli_query($conn, "SELECT email_t, codice FROM team") or die(mysqli_error($conn));
 
-                $selezione = mysqli_query($conn, "SELECT email_t, codice FROM team") or die(mysqli_error($conn));
-
-                if ($selezione) {
-
-
-                  while ($array = mysqli_fetch_assoc($selezione)) {
-                    $email = sanitize_content($conn, $array["email_t"]);
-                    $codice = sanitize_content($conn, $array["codice"]);
+                  if ($selezione) {
 
 
-                    //da qui c'è il menù a discesa riempito con i valori del database
-                    echo "
+                    while ($array = mysqli_fetch_assoc($selezione)) {
+                      $email = sanitize_content($conn, $array["email_t"]);
+                      $codice = sanitize_content($conn, $array["codice"]);
+
+
+                      //da qui c'è il menù a discesa riempito con i valori del database
+                      echo "
 
 		<option value='$codice'>$email</option>
 
 	";
+                    }
                   }
                 }
+
                 ?>
                 <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
                 <input type="hidden" name="token" value="<?php echo $token; ?>" />
@@ -280,43 +284,47 @@
 
             <?php
 
-            $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
+            if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
+              $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 
 
 
-            # ---INSERIMENTO DA FORM ---
+              # ---INSERIMENTO DA FORM ---
             
-            #salvo i nomi (name) dei form in una variabile php, richiamando i valori dal form con _POST (se nel fotm era 'method=get' diventava $_GET)
+              #salvo i nomi (name) dei form in una variabile php, richiamando i valori dal form con _POST (se nel fotm era 'method=get' diventava $_GET)
             
 
 
-            $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
-            $nomi = (isset($_POST['nomi'])) ? mysqli_real_escape_string($conn, $_POST['nomi']) : null;
-            $numeri = (isset($_POST['numero'])) ? $_POST['numero'] : null;
-            $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
+              $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
+              $nomi = (isset($_POST['nomi'])) ? mysqli_real_escape_string($conn, $_POST['nomi']) : null;
+              $numeri = (isset($_POST['numero'])) ? $_POST['numero'] : null;
+              $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
 
-            if (isset($_POST['submit3'])) {
-              if ($email && $nomi && $numeri && $pass !== null) {
-                #inserisco i valori salvati dal form nella query di inserimento
-
-                $toinsert = "INSERT INTO team
+              if (isset($_POST['submit3'])) {
+                if ($email && $nomi && $numeri && $pass !== null) {
+                  #inserisco i valori salvati dal form nella query di inserimento
+            
+                  $toinsert = "INSERT INTO team
                 (email_t, npersone, nomi, password)
                 VALUES
                 (?, ?, ?, ?)";
 
-                $stmt = mysqli_prepare($conn, $toinsert);
-                $stmt->bind_param('siss', $email, $numeri, $nomi, $pass);
-                $stmt->execute();
-                $result = $stmt->get_result();
+                  $stmt = mysqli_prepare($conn, $toinsert);
+                  $stmt->bind_param('siss', $email, $numeri, $nomi, $pass);
+                  $stmt->execute();
+                  $result = $stmt->get_result();
 
-                if ($result) {
-                  echo ("<b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per vedere la tabella aggiornata!</p></b></center>");
+                  if ($result) {
+                    echo ("<b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per vedere la tabella aggiornata!</p></b></center>");
+                  }
+                } else {
+                  echo ("<p> <center> <font color=black font face='Courier'>Compila tutti i campi.</p></b></center>");
                 }
-              } else {
-                echo ("<p> <center> <font color=black font face='Courier'>Compila tutti i campi.</p></b></center>");
               }
             }
+
+
 
             ?>
 

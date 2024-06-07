@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<?php 
-  if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
-  }
-  
-  $token = $_SESSION['token'];
+<?php session_start()?>
+<?php
+if (empty($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
+$token = $_SESSION['token'];
 ?>
 <html lang="en">
 
@@ -59,14 +60,14 @@
                   <!-- VULNERABILITY: Autocomplete -->
                   <input type="password" id="confirmPassword" autocomplete="off" class="form-control"
                     placeholder="Confirm password" required="required">
-                    <input type="hidden" name="token" value="<?php echo $token; ?>" />
+                  <input type="hidden" name="token" value="<?php echo $token; ?>" />
                   <label for="confirmPassword">Conferma la password</label>
                 </div>
               </div>
             </div>
           </div>
           <button type="submit" class="btn btn-primary btn-block"> Registrati </button>
-          
+
         </form>
       </div>
     </div>
@@ -74,28 +75,31 @@
 
   <?php
 
-  $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
-  mysqli_select_db($conn, "civicsense") or die("DataBase non trovato");
+  if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
+    $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
+    mysqli_select_db($conn, "civicsense") or die("DataBase non trovato");
 
 
-  $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
-  $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
+    $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
+    $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
 
 
-  if ($email && $pass !== null) {
+    if ($email && $pass !== null) {
 
 
-    $query = ("UPDATE team SET password = ? WHERE email_t = ?");
+      $query = ("UPDATE team SET password = ? WHERE email_t = ?");
 
-    $stmt = mysqli_prepare($conn, $query);
-    $stmt->bind_param('ss', $pass, $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
+      $stmt = mysqli_prepare($conn, $query);
+      $stmt->bind_param('ss', $pass, $email);
+      $stmt->execute();
+      $result = $stmt->get_result();
 
-    if ($result) {
-      echo ("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+      if ($result) {
+        echo ("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+      }
     }
   }
+
 
   ?>
 
