@@ -1,11 +1,12 @@
+<?php session_start();
+?>
 <!DOCTYPE html>
-<?php session_start()?>
-<?php 
-  if (empty($_SESSION['token'])) {
-    $_SESSION['token'] = bin2hex(random_bytes(32));
-  }
-  
-  $token = $_SESSION['token'];
+<?php
+if (empty($_SESSION['token'])) {
+  $_SESSION['token'] = bin2hex(random_bytes(32));
+}
+
+$token = $_SESSION['token'];
 ?>
 <html lang="en">
 
@@ -71,29 +72,29 @@
   </form>
 
   <?php
-// INSTEAD OF THIS LET TRY TO CHANGE THE CODE FOR THE POSSIBLE VULNERABILITIES 
-   /*$conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
+  // INSTEAD OF THIS LET TRY TO CHANGE THE CODE FOR THE POSSIBLE VULNERABILITIES 
+  /*$conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
 
-  $data = (isset($_POST['data'])) ? $_POST['data'] : null;
-  $ora = (isset($_POST['ora'])) ? $_POST['ora'] : null;
-  $via = (isset($_POST['via'])) ? $_POST['via'] : null;
-  $descr = (isset($_POST['descr'])) ? $_POST['descr'] : null;
-  $foto = (isset($_POST['foto'])) ? $_POST['foto'] : null;
-  $email = (isset($_POST['email'])) ? $_POST['email'] : null;
-  $lat = (isset($_POST['lat'])) ? $_POST['lat'] : null;
-  $long = (isset($_POST['long'])) ? $_POST['long'] : null;
-  $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : null;
+ $data = (isset($_POST['data'])) ? $_POST['data'] : null;
+ $ora = (isset($_POST['ora'])) ? $_POST['ora'] : null;
+ $via = (isset($_POST['via'])) ? $_POST['via'] : null;
+ $descr = (isset($_POST['descr'])) ? $_POST['descr'] : null;
+ $foto = (isset($_POST['foto'])) ? $_POST['foto'] : null;
+ $email = (isset($_POST['email'])) ? $_POST['email'] : null;
+ $lat = (isset($_POST['lat'])) ? $_POST['lat'] : null;
+ $long = (isset($_POST['long'])) ? $_POST['long'] : null;
+ $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : null;
 
-  $finfo = finfo_open(FILEINFO_MIME_TYPE);
-  foreach (glob("*") as $filename) {
-    // VULNERABILITY: File upload
-    // If MIME type is not allowed
-    if (!in_array(finfo_file($finfo, $filename), ['image/png', 'image/jpg', 'image/jpeg'])) {
-      finfo_close($finfo);
-      return;
-    }
-  }
-  finfo_close($finfo);
+ $finfo = finfo_open(FILEINFO_MIME_TYPE);
+ foreach (glob("*") as $filename) {
+   // VULNERABILITY: File upload
+   // If MIME type is not allowed
+   if (!in_array(finfo_file($finfo, $filename), ['image/png', 'image/jpg', 'image/jpeg'])) {
+     finfo_close($finfo);
+     return;
+   }
+ }
+ finfo_close($finfo);
 
 $data=mysqli_real_escape_string($conn,$data);
 $data=stripslashes($data);
@@ -110,22 +111,22 @@ $long=stripslashes($long);
 
 
 
-  $sql = "INSERT INTO segnalazioni
-            (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
-            VALUES
-            ('$data','$ora', '$via', '$descr', '$foto', '$email', '$tipo', '$lat', '$long') ";
-        $result = mysqli_query($conn,$sql);
+ $sql = "INSERT INTO segnalazioni
+           (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
+           VALUES
+           ('$data','$ora', '$via', '$descr', '$foto', '$email', '$tipo', '$lat', '$long') ";
+       $result = mysqli_query($conn,$sql);
 
-  if ($result) {
-    echo "<center> inserimento avvenuto. </center>";
+ if ($result) {
+   echo "<center> inserimento avvenuto. </center>";
 
-  }*/
+ }*/
 
-//THE CORRECT CODE IS DOWN AND MORE SECURE
-if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
-  $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
+  //THE CORRECT CODE IS DOWN AND MORE SECURE
+  if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
+    $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
       $data = isset($_POST['data']) ? mysqli_real_escape_string($conn, stripslashes($_POST['data'])) : null;
       $ora = isset($_POST['ora']) ? mysqli_real_escape_string($conn, stripslashes($_POST['ora'])) : null;
       $via = isset($_POST['via']) ? mysqli_real_escape_string($conn, stripslashes($_POST['via'])) : null;
@@ -134,39 +135,39 @@ if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token']))
       $lat = isset($_POST['lat']) ? mysqli_real_escape_string($conn, stripslashes($_POST['lat'])) : null;
       $long = isset($_POST['long']) ? mysqli_real_escape_string($conn, stripslashes($_POST['long'])) : null;
       $tipo = isset($_POST['tipo']) ? mysqli_real_escape_string($conn, stripslashes($_POST['tipo'])) : null;
-  
+
       // Handling file upload securely
       $allowed_mime_types = ['image/png', 'image/jpg', 'image/jpeg'];
       $file_tmp_path = $_FILES['foto']['tmp_name'];
       $file_mime_type = mime_content_type($file_tmp_path);
-  
+
       if ($_FILES['foto']['error'] == UPLOAD_ERR_OK && in_array($file_mime_type, $allowed_mime_types)) {
-          $foto = file_get_contents($file_tmp_path);
+        $foto = file_get_contents($file_tmp_path);
       } else {
-          $foto = null;
-          echo "<center>Formato del file non supportato.</center>";
+        $foto = null;
+        echo "<center>Formato del file non supportato.</center>";
       }
-  
+
       if ($data && $ora && $via && $descr && $email && $lat && $long && $tipo && $foto) {
-          $sql = "INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-          $stmt = mysqli_prepare($conn, $sql);
-          mysqli_stmt_bind_param($stmt, 'ssssssidd', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
-          $result = mysqli_stmt_execute($stmt);
-  
-          if ($result) {
-              echo "<center>Inserimento avvenuto.</center>";
-          } else {
-              echo "<center>Errore durante l'inserimento: " . mysqli_error($conn) . "</center>";
-          }
-  
-          mysqli_stmt_close($stmt);
+        $sql = "INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, 'ssssssidd', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
+        $result = mysqli_stmt_execute($stmt);
+
+        if ($result) {
+          echo "<center>Inserimento avvenuto.</center>";
+        } else {
+          echo "<center>Errore durante l'inserimento: " . mysqli_error($conn) . "</center>";
+        }
+
+        mysqli_stmt_close($stmt);
       } else {
-          echo "<center>Tutti i campi sono obbligatori.</center>";
+        echo "<center>Tutti i campi sono obbligatori.</center>";
       }
+    }
+
+    mysqli_close($conn);
   }
-  
-  mysqli_close($conn);
-}
 
 
 
