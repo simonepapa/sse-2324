@@ -281,7 +281,7 @@ if ($idt && $grav !== null) {
 
   if($resultC){
     $row = mysqli_fetch_assoc($resultC);
-    if($idt == $row['id'] && gettype($idt) == 'integer'){
+    if($idt == $row['id'] && gettype($idt) == 'integer' && gettype($grav) == 'integer'){
       // VULNERABILITY: SQL INJECTION
       //$query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
 
