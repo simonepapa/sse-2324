@@ -123,5 +123,4 @@ $token = $_SESSION['token'];
     }
     $conn->close();
   }
-
   ?>
