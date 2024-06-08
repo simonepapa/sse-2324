@@ -1,5 +1,14 @@
+<?php session_start();
+  if(!isset($_SESSION['isLogin']) 
+    || !isset($_SESSION['isAdmin']) 
+    || (isset($_SESSION['isLogin']) && isset($_SESSION['isAdmin']) && ($_SESSION['isLogin'] !== true | $_SESSION['isAdmin'] !== true))
+  ){ //if login in session is not set
+    header("Location: http://localhost/Ingegneria/login.php");
+}
+?>
+
 <!DOCTYPE html>
-<?php session_start()?>
+
 <?php 
   $env = parse_ini_file('../.env');
   if (empty($_SESSION['token'])) {
@@ -58,18 +67,19 @@
 
 <!-- INIZIO LOGOUT -->     
 
- <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+<form action="php/logout.php" method="POST" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
     <ul class="navbar-nav ms-auto ms-md-0">
         <li class="nav-item dropdown no-arrow dropstart" >
            <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
              <i class="fas fa-user-circle fa-fw"></i>
            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="login.html" data-toggle="modal" data-target="#logoutModal" > Logout </a>
+            <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal" > Logout </button>
           </div>
         </li>
     </ul>
- </div>
+    <input type="hidden" name="token" value="<?php echo $token; ?>" />
+ </form>
  
 </nav>
 
@@ -345,7 +355,7 @@ Statistiche annuali per le segnalazioni di illuminazione</div>
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <div class="bg-white" style="max-width: 300px;padding: 16px; border: 1px solid black; border-radius: 8px; position: fixed; bottom: 16px; right: 16px;">
+    <div id="policyBanner" class="bg-white d-none" style="max-width: 300px;padding: 16px; border: 1px solid black; border-radius: 8px; position: fixed; bottom: 16px; right: 16px;">
       <p style="font-size:24px">Privacy Policy</p>
       <p style="font-size:16px">This website uses cookies and bla bla bla. Read and accept privacy policy so that you know how your data are being used.
       <div class="d-flex justify-content-between mt-5">
@@ -355,6 +365,15 @@ Statistiche annuali per le segnalazioni di illuminazione</div>
         </form>
       </div>
     </div>
+
+    <script>
+      const isLogin = localStorage.getItem("isLogin");
+      if (isLogin) {
+        document.getElementById("policyBanner").classList.remove("d-none")
+        document.getElementById("policyBanner").classList.remove("d-none")
+      }
+      console.log(isLogin)
+    </script>
   </body>
 
 </html>
