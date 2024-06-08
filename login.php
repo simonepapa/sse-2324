@@ -82,36 +82,35 @@ $token = $_SESSION['token'];
   <?php
   //Recupero dati
   if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
-    $env = parse_ini_file('../.env');
+    $env = parse_ini_file('.env');
     $conn = new mysqli("localhost", "root", $env['DB_EMPTY_PASSWORD'], "civicsense");
 
     if (isset($_POST['email']) && isset($_POST['password'])) {
       $email = $_POST['email'];
-      $password = $_POST['password'];
-
-      $admin_query = "SELECT * FROM admin WHERE email = ? AND password = ?";
+      $password = $_POST['password']; 
+      $admin_query = "SELECT * FROM admin WHERE email = ?";
 
       $admin_stmt = mysqli_prepare($conn, $admin_query);
-      $admin_stmt->bind_param('ss', $email, $password);
+      $admin_stmt->bind_param('s', $email);
       $admin_stmt->execute();
       $admin_result = $admin_stmt->get_result();
 
       $row = mysqli_fetch_assoc($admin_result);
-      //password_verify($password, $hashed_password)
-      if ($row !== null && $row['email'] === $email && $row['password'] === $password) {
+      //
+      if ($row !== null && $row['email'] === $email && password_verify($password, $row['password'])) {
         $_SESSION['isLogin'] = true;
         $_SESSION['isAdmin'] = true;
         header("Location: http://localhost/Ingegneria/admin");
       } else {
-        $team_query = "SELECT * FROM team WHERE email_t = ? AND password = ?";
+        $team_query = "SELECT * FROM team WHERE email_t = ?";
 
         $team_stmt = mysqli_prepare($conn, $team_query);
-        $team_stmt->bind_param('ss', $email, $password);
+        $team_stmt->bind_param('s', $email);
         $team_stmt->execute();
         $team_result = $team_stmt->get_result();
 
         $team_row = mysqli_fetch_assoc($team_result);
-        if ($team_row !== null && $team_row['email_t'] === $email && $team_row['password'] === $password) {
+        if ($team_row !== null && $team_row['email_t'] === $email && password_verify($password, $team_row['password'])) {
           $_SESSION['isLogin'] = true;
           $_SESSION['isAdmin'] = false;
           header("Location: http://localhost/Ingegneria/team");
