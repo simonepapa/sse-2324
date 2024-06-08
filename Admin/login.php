@@ -121,7 +121,7 @@ $token = $_SESSION['token'];
  $stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
  $stmt->bind_param("s", $email);
  $stmt->execute();
- $result = $stmt->get_result();
+ $result = mysqli_stmt_get_result($stmt);
 
   /*      if (mysql_num_rows($result) > 0) {
 

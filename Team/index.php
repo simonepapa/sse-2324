@@ -122,7 +122,7 @@
 		    $stmt = $mysqli->prepare($sql);
 		    $stmt->bind_param('i', $_SESSION['idT']);
 		    $stmt->execute();
-		    $resultC = $stmt->get_result();
+		    $resultC = mysqli_stmt_get_result($stmt);
 
         if($resultC){
           while($row=mysqli_fetch_assoc($resultC)){

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$stmt->execute();
 
 		
-	               /*	$result = $stmt->get_result();
+	               /*	$result = mysqli_stmt_get_result($stmt);
 	                  	if ($result) {
 	              		echo "Inserimento dei dati completato";
 	                 	} else {

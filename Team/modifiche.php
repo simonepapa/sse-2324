@@ -26,7 +26,7 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 	$stmt = $mysqli->prepare($query);
 	$stmt->bind_param('i', $idS);
 	$stmt->execute();
-	$result = $stmt->get_result();
+	$result = mysqli_stmt_get_result($stmt);
 
 	$result = $conn->query($query);
 
@@ -39,7 +39,7 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 			$stmt = mysqli_prepare($conn, $sql);
 			$stmt->bind_param('si', $stato, $idS);
 			$stmt->execute();
-			$result1 = $stmt->get_result();
+			$result1 = mysqli_stmt_get_result($stmt);
 
 			$result1 = $conn->query($sql);
 			if ($result1) {
@@ -82,7 +82,7 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
 			$stmt = mysqli_prepare($conn, $sql);
 			$stmt->bind_param('si', $stato, $idS);
 			$stmt->execute();
-			$result1 = $stmt->get_result();
+			$result1 = mysqli_stmt_get_result($stmt);
 
 
 			$result1 = $conn->query($sql);
