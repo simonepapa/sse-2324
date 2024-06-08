@@ -313,7 +313,7 @@ $token = $_SESSION['token'];
                   $stmt = mysqli_prepare($conn, $toinsert);
                   $stmt->bind_param('siss', $email, $numeri, $nomi, $pass);
                   $stmt->execute();
-                  $result = $stmt->get_result();
+                  $result = mysqli_stmt_get_result($stmt);
 
                   if ($result) {
                     echo ("<b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per vedere la tabella aggiornata!</p></b></center>");

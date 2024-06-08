@@ -16,7 +16,7 @@ if (isset($_POST['submit2'])) {
 		$stmt = $mysqli->prepare($query);
 		$stmt->bind_param('i', $codice);
 		$stmt->execute();
-		$resultC = $stmt->get_result();
+		$resultC = mysqli_stmt_get_result($stmt);
 
 
 		if ($resultC) {
@@ -26,7 +26,7 @@ if (isset($_POST['submit2'])) {
 				$stmt = $mysqli->prepare($query);
 				$stmt->bind_param('i', $codice);
 				$stmt->execute();
-				$resultC = $stmt->get_result();
+				$resultC = mysqli_stmt_get_result($stmt);
 
 				if ($query) {
 					echo ("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");

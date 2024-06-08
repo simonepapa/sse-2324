@@ -10,7 +10,7 @@ if (isset($_SESSION['idT'])) {
   $stmt = mysqli_prepare($conn, $sql);
   $stmt->bind_param('i', $_SESSION['idT']);
   $stmt->execute();
-  $resultC = $stmt->get_result();
+  $resultC = mysqli_stmt_get_result($stmt);
 
   while ($row = mysqli_fetch_assoc($resultC)) {
     echo "

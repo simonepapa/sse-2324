@@ -282,7 +282,7 @@ if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token']))
           $stmt = mysqli_prepare($conn, $query);
           $stmt->bind_param('ii', $grav, $idt);
           $stmt->execute();
-          $result = $stmt->get_result();
+          $result = mysqli_stmt_get_result($stmt);
   
           if($result){
             echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
@@ -345,17 +345,16 @@ Statistiche annuali per le segnalazioni di illuminazione</div>
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
 
-	
-	
-	
-
-
-
-	
-	
-	
-	
-	
+    <div class="bg-white" style="max-width: 300px;padding: 16px; border: 1px solid black; border-radius: 8px; position: fixed; bottom: 16px; right: 16px;">
+      <p style="font-size:24px">Privacy Policy</p>
+      <p style="font-size:16px">This website uses cookies and bla bla bla. Read and accept privacy policy so that you know how your data are being used.
+      <div class="d-flex justify-content-between mt-5">
+        <a href="privacy-policy.php" class="btn btn-secondary">Learn more</a>
+        <form action="registerPrivacyConsent.php">
+          <button type="submit" class="btn btn-primary">Accept</button>
+        </form>
+      </div>
+    </div>
   </body>
 
 </html>

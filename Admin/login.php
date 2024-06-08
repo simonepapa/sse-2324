@@ -72,11 +72,36 @@ $token = $_SESSION['token'];
                 die("Connection failed: " . $conn->connect_error);
               }
 
-              // Prepare and bind
-              $stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
-              $stmt->bind_param("s", $email);
-              $stmt->execute();
-              $result = $stmt->get_result();
+ // Prepare and bind
+ $stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
+ $stmt->bind_param("s", $email);
+ $stmt->execute();
+ $result = mysqli_stmt_get_result($stmt);
+
+  /*      if (mysql_num_rows($result) > 0) {
+
+          while ($row = mysqli_fetch_assoc($result)) {
+            if ($password != $row["password"] || $email != $row["email_t"]) {
+              //CODICE JAVASCRIPT
+              echo 'ATTENZIONE: La password o la email inserita non è corretta!';
+            } else if ($password == $row["password"] || $email == $row["email_t"]) {
+              $_SESSION['email'] = $email;
+              $_SESSION['pass'] = $password;
+              $_SESSION['idT'] = $row['codice'];
+              echo 'Accesso consentito area riservata (TEAM)';
+              header("location: http://localhost//Ingegneria/Team/index.php");
+            }
+
+          }
+        }
+
+
+      }
+
+
+*/
+    }
+  }
 
               if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();

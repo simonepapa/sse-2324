@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<?php session_start()?>
+<html lang="en">
+<?php session_start(); ?>
 <?php
 if (empty($_SESSION['token'])) {
   $_SESSION['token'] = bin2hex(random_bytes(32));
@@ -7,7 +8,6 @@ if (empty($_SESSION['token'])) {
 
 $token = $_SESSION['token'];
 ?>
-<html lang="en">
 
 <head>
 
@@ -72,9 +72,9 @@ $token = $_SESSION['token'];
       </div>
     </div>
   </div>
+  
 
   <?php
-
   if (!empty($_POST['token']) && hash_equals($_SESSION['token'], $_POST['token'])) {
     $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
     mysqli_select_db($conn, "civicsense") or die("DataBase non trovato");
@@ -85,17 +85,15 @@ $token = $_SESSION['token'];
 
 
     if ($email && $pass !== null) {
-
-
       $query = ("UPDATE team SET password = ? WHERE email_t = ?");
 
       $stmt = mysqli_prepare($conn, $query);
-      $stmt->bind_param('ss', $pass, $email);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if ($result) {
-        echo ("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+      mysqli_stmt_bind_param($stmt, 'ss', $pass, $email);
+      $result = mysqli_stmt_execute($stmt);
+      if (mysqli_affected_rows($conn) > 0) {
+        echo ("<br><b><br><p> <center> <font color='white' font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+      } else {
+        echo ("<br><b><br><p> <center> <font color='white' font face='Courier'> Couldn't update data. Make sure that the email is correct and that the password is different from your current one. </b></center></p><br><br> ");
       }
     }
   }
@@ -110,7 +108,6 @@ $token = $_SESSION['token'];
 
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
 </body>
 
 </html>
