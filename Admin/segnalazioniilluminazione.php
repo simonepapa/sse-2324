@@ -355,17 +355,6 @@ Statistiche annuali per le segnalazioni di illuminazione</div>
     <!-- Demo scripts for this page-->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <div id="policyBanner" class="bg-white d-none" style="max-width: 300px;padding: 16px; border: 1px solid black; border-radius: 8px; position: fixed; bottom: 16px; right: 16px;">
-      <p style="font-size:24px">Privacy Policy</p>
-      <p style="font-size:16px">This website uses cookies and bla bla bla. Read and accept privacy policy so that you know how your data are being used.
-      <div class="d-flex justify-content-between mt-5">
-        <a href="../privacy-policy.php" class="btn btn-secondary">Learn more</a>
-        <form action="registerPrivacyConsent.php">
-          <button type="submit" class="btn btn-primary">Accept</button>
-        </form>
-      </div>
-    </div>
-
     <script>
       const isLogin = localStorage.getItem("isLogin");
       if (isLogin) {
