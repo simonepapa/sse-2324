@@ -51,7 +51,7 @@
       <a href="index.php" class="navbar-brand me-1 fw-bold"> Area riservata</a>
 
       <a href="profile.php" class="ms-5 text-white text-decoration-none">Profile</a>
-
+      <a href="privacy.php" class="ms-5 text-white text-decoration-none">Privacy Consent</a>
       
 <!-- INIZIO LOGOUT -->     
 

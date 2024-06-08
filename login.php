@@ -64,7 +64,7 @@ $token = $_SESSION['token'];
 
           <button type="submit" class="btn btn-primary btn-block"> Login</button>
           <a class="d-block small text-center" href="registrateam.php">Sei un nuovo team? Registra la tua
-              password!</a>
+            password!</a>
         </form>
 
       </div>
@@ -86,7 +86,7 @@ $token = $_SESSION['token'];
 
     if (isset($_POST['email']) && isset($_POST['password'])) {
       $email = $_POST['email'];
-      $password = $_POST['password']; 
+      $password = $_POST['password'];
       $admin_query = "SELECT * FROM admin WHERE email = ?";
 
       $admin_stmt = mysqli_prepare($conn, $admin_query);
@@ -121,8 +121,7 @@ $token = $_SESSION['token'];
         }
       }
     }
+    $conn->close();
   }
-
-  $conn->close();
 
   ?>

@@ -40,7 +40,7 @@ $token = $_SESSION['token'];
 
           <div class="form-group">
             <div class="form-label-group">
-              <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email "
+              <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email "
                 required="required">
               <label for="inputEmail">Email </label>
             </div>
@@ -73,7 +73,7 @@ $token = $_SESSION['token'];
                 <input type="hidden" name="privacyConsentHidden" id="privacyConsentHidden" value="0" />
                 <label class="form-check-label" for="privacyConsent">
                   I explicitly give my consent for the use of my data as described in the <a
-                    href="privacy-policy.php">Privacy Policy</a>
+                    target="_blank" href="privacy-policy.php">Privacy Policy</a>
                 </label>
               </div>
             </div>
