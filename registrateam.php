@@ -36,7 +36,7 @@ $token = $_SESSION['token'];
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Registra la password del team</div>
       <div class="card-body">
-        <form action="registrateam.php" method="POST">
+        <form action="registrateam.php" method="POST" class="d-flex flex-column gap-4">
 
           <div class="form-group">
             <div class="form-label-group">
@@ -46,7 +46,7 @@ $token = $_SESSION['token'];
             </div>
           </div>
           <div class="form-group">
-            <div class="form-row">
+            <div class="form-row row">
               <div class="col-md-6">
                 <div class="form-label-group">
                   <!-- VULNERABILITY: Autocomplete -->
@@ -58,17 +58,30 @@ $token = $_SESSION['token'];
               <div class="col-md-6">
                 <div class="form-label-group">
                   <!-- VULNERABILITY: Autocomplete -->
-                  <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off" class="form-control"
-                    placeholder="Confirm password" required="required">
+                  <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off"
+                    class="form-control" placeholder="Confirm password" required="required">
                   <input type="hidden" name="token" value="<?php echo $token; ?>" />
                   <label for="confirmPassword">Conferma la password</label>
                 </div>
               </div>
             </div>
           </div>
+          <div class="form-group">
+            <div class="form-row row">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="privacyConsent" value="" id="privacyConsent">
+                <input type="hidden" name="privacyConsentHidden" id="privacyConsentHidden" value="0" />
+                <label class="form-check-label" for="privacyConsent">
+                  I explicitly give my consent for the use of my data as described in the <a
+                    href="privacy-policy.php">Privacy Policy</a>
+                </label>
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-primary btn-block"> Registrati </button>
-          <br>
-          <center> <a class="d-block small mt-3" href="login.php">Hai già un team? Effettua il login!</a> </center>
+
+          <center> <a class="d-block small" href="login.php">Hai già un team? Effettua il login!</a> </center>
         </form>
       </div>
     </div>
@@ -80,10 +93,10 @@ $token = $_SESSION['token'];
     $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita");
     mysqli_select_db($conn, "civicsense") or die("DataBase non trovato");
 
-
     $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
     $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
     $confirmPass = (isset($_POST['confirmPassword'])) ? mysqli_real_escape_string($conn, $_POST['confirmPassword']) : null;
+    $privacyConsent = $_POST['privacyConsentHidden'] == '0' ? 0 : 1;
 
     $lengthPattern = '/.{8,}/';
     $numberSymbolPattern = '/(?=.*[0-9])|(?=.*[^A-Za-z0-9])/';
@@ -93,17 +106,16 @@ $token = $_SESSION['token'];
     $numberSymbolCheck = preg_match($numberSymbolPattern, $pass);
     $uppercaseCheck = preg_match($uppercasePattern, $pass);
 
-    echo $pass;
-    echo $confirmPass;
-
     if ($lengthCheck && $numberSymbolCheck && $uppercaseCheck && $pass == $confirmPass) {
       $hashed_password = password_hash($pass, PASSWORD_BCRYPT);
 
       if ($email && $pass !== null) {
-        $query = ("INSERT INTO team(email_t, password) VALUES (?, ?)");
+        $query = ("INSERT INTO team(email_t, password, privacy_consent) VALUES (?, ?, ?)");
+
+        $consent = $_POST['privacyConsent'];
 
         $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, 'ss', $email, $hashed_password);
+        mysqli_stmt_bind_param($stmt, 'ssi', $email, $hashed_password, $privacyConsent);
         $result = mysqli_stmt_execute($stmt);
         if (mysqli_affected_rows($conn) > 0) {
           echo ("<br><b><br><p> <center> <font color='white' font face='Courier'> Team registrato! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
@@ -112,11 +124,13 @@ $token = $_SESSION['token'];
         }
       }
     } else {
-      echo ("<p> <center> <font color='white' font face='Courier'> Couldn't register user. Make sure that both password are the same, that the password is at least of 8 characters and contains at least an uppercase character, a number and a special character </b></center></p><br><br> ");
+      echo ("<p class='text-white text-center mt-4'>Your password should match the following conditions:</p><ul class='mx-auto' style='width: fit-content;'>
+        <li style='" . ($lengthCheck == 1 ? 'color: #8FE7A8' : 'color: #FF8389') . "'>at least 8 characters</li>
+        <li style='" . ($numberSymbolCheck == 1 ? 'color: #8FE7A8' : 'color: #FF8389') . "'>contains a number or symbol</li>
+        <li style='" . ($uppercaseCheck == 1 ? 'color: #8FE7A8' : 'color: #FF8389') . "'>contains at least an uppercase character</li>
+      </ul>");
 
     }
-
-
   }
 
 
@@ -129,6 +143,12 @@ $token = $_SESSION['token'];
 
   <!-- Core plugin JavaScript-->
   <script src="Admin/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <script>
+    document.getElementById("privacyConsent").addEventListener("change", (e) => {
+      document.getElementById("privacyConsentHidden").value = e.target.checked === true ? '1' : '0'
+    })
+  </script>
 </body>
 
 </html>

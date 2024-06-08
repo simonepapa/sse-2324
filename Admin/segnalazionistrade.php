@@ -67,39 +67,42 @@
 
 <!-- INIZIO LOGOUT -->     
 
-<form action="php/logout.php" method="POST" class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
-    <ul class="navbar-nav ms-auto ms-md-0">
-        <li class="nav-item dropdown no-arrow dropstart" >
-           <a class="nav-link dropdown-toggle" href="#" title="Logout"  id="userDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             <i class="fas fa-user-circle fa-fw"></i>
-           </a>
+<div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+      <ul class="navbar-nav ms-auto ms-md-0">
+        <li class="nav-item dropdown no-arrow dropstart">
+          <a class="nav-link dropdown-toggle" href="#" title="Logout" id="userDropdown" role="button"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-user-circle fa-fw"></i>
+          </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <button class="dropdown-item" data-toggle="modal" data-target="#logoutModal" > Logout </button>
+            <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#logoutModal"> Logout </button>
           </div>
         </li>
-    </ul>
-    <input type="hidden" name="token" value="<?php echo $token; ?>" />
- </form>
-</nav>
+      </ul>
 
-    <!-- finestra avviso-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Sei sicuro di voler lasciare il sito?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Clicca "Logout" per uscire dal sito.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Annulla</button>
-            <a class="btn btn-primary" href="login.php">Logout</a>
-          </div>
+    </div>
+  </nav>
+
+  <!-- finestra avviso-->
+  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Sei sicuro di voler lasciare il sito?</h5>
+          <button class="close" type="button" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
         </div>
+        <div class="modal-body">Clicca "Logout" per uscire dal sito.</div>
+        <form action="php/logout.php" method="POST" class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annulla</button>
+          <button type="submit.php" class="btn btn-primary">Logout</button>
+          <input type="hidden" name="token" value="<?php echo $token; ?>" />
+        </form>
       </div>
     </div>
+  </div>
 
 <!-- FINE LOGOUT-->
 

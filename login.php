@@ -35,7 +35,7 @@ $token = $_SESSION['token'];
     <div class="card card-login mx-auto mt-5">
       <div class="card-header">Login</div>
       <div class="card-body">
-        <form action="#" method="POST">
+        <form action="#" method="POST" class="d-flex flex-column gap-4">
           <div class="form-group">
             <div class="form-label-group">
               <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email"
@@ -63,8 +63,7 @@ $token = $_SESSION['token'];
           </div>
 
           <button type="submit" class="btn btn-primary btn-block"> Login</button>
-          <br>
-          <center> <a class="d-block small mt-3" href="registrateam.php">Sei un nuovo team? Registra la tua
+          <center> <a class="d-block small" href="registrateam.php">Sei un nuovo team? Registra la tua
               password!</a> </center>
         </form>
 
@@ -100,6 +99,7 @@ $token = $_SESSION['token'];
       if ($row !== null && $row['email'] === $email && password_verify($password, $row['password'])) {
         $_SESSION['isLogin'] = true;
         $_SESSION['isAdmin'] = true;
+        $_SESSION['email'] = $email;
         header("Location: http://localhost/Ingegneria/admin");
       } else {
         $team_query = "SELECT * FROM team WHERE email_t = ?";
@@ -113,6 +113,7 @@ $token = $_SESSION['token'];
         if ($team_row !== null && $team_row['email_t'] === $email && password_verify($password, $team_row['password'])) {
           $_SESSION['isLogin'] = true;
           $_SESSION['isAdmin'] = false;
+          $_SESSION['email'] = $email;
           header("Location: http://localhost/Ingegneria/team");
         } else {
           $_SESSION['isLogin'] = false;
