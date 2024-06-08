@@ -63,8 +63,8 @@ $token = $_SESSION['token'];
           </div>
 
           <button type="submit" class="btn btn-primary btn-block"> Login</button>
-          <center> <a class="d-block small" href="registrateam.php">Sei un nuovo team? Registra la tua
-              password!</a> </center>
+          <a class="d-block small text-center" href="registrateam.php">Sei un nuovo team? Registra la tua
+              password!</a>
         </form>
 
       </div>
