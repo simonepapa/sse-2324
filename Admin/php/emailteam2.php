@@ -12,7 +12,17 @@ if ($id && $team !== null) {
         echo ('<a href="mailto: ' . sanitize_content($conn, $result) . '"><center> Clicca qui per mandare un avviso al team. </center></a>');
     }
 } */
-
+if (!function_exists('sanitize_content')) {
+    function sanitize_content($conn, $content)
+    {
+        $cont = stripslashes($content);
+        $cont = strip_tags($cont);
+        $cont = mysqli_real_escape_string($conn, $cont);
+        $cont = htmlentities($cont);
+    
+        return $cont;
+    }
+    }
 
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita: " . mysqli_connect_error());
 

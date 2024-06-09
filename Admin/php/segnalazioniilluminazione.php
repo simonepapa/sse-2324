@@ -5,6 +5,17 @@ mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessio
 
 $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '5' ");
 
+if (!function_exists('sanitize_content')) {
+  function sanitize_content($conn, $content)
+  {
+      $cont = stripslashes($content);
+      $cont = strip_tags($cont);
+      $cont = mysqli_real_escape_string($conn, $cont);
+      $cont = htmlentities($cont);
+  
+      return $cont;
+  }
+  }
 
 while ($row = mysqli_fetch_assoc($quer)) {
   echo "

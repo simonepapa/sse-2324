@@ -5,6 +5,17 @@
   ){ //if login in session is not set
     header("Location: http://localhost/Ingegneria/login.php");
 }
+if (!function_exists('sanitize_content')) {
+  function sanitize_content($conn, $content)
+  {
+      $cont = stripslashes($content);
+      $cont = strip_tags($cont);
+      $cont = mysqli_real_escape_string($conn, $cont);
+      $cont = htmlentities($cont);
+  
+      return $cont;
+  }
+  }
 ?>
 <!DOCTYPE html>
 <?php 

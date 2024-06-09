@@ -3,6 +3,18 @@ $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connession
 
 $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE gravita IS NOT NULL AND team IS NULL");
 
+if (!function_exists('sanitize_content')) {
+    function sanitize_content($conn, $content)
+    {
+        $cont = stripslashes($content);
+        $cont = strip_tags($cont);
+        $cont = mysqli_real_escape_string($conn, $cont);
+        $cont = htmlentities($cont);
+    
+        return $cont;
+    }
+    }
+
 if (mysqli_num_rows($quer) > 0) {
     // output data of each row
     while ($row = mysqli_fetch_assoc($quer)) {

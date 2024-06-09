@@ -17,7 +17,17 @@ var chart = AmCharts.makeChart("chartdiv", {
 	
 	
 	<?php 
-	
+	if (!function_exists('sanitize_content')) {
+    function sanitize_content($conn, $content)
+    {
+        $cont = stripslashes($content);
+        $cont = strip_tags($cont);
+        $cont = mysqli_real_escape_string($conn, $cont);
+        $cont = htmlentities($cont);
+    
+        return $cont;
+    }
+    }
 $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
 mysqli_select_db($conn, "civicsense") or die ("DataBase non trovato");
 

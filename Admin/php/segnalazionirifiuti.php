@@ -3,6 +3,17 @@ $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connession
 
 $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE tipo = '2' ");
 
+if (!function_exists('sanitize_content')) {
+  function sanitize_content($conn, $content)
+  {
+      $cont = stripslashes($content);
+      $cont = strip_tags($cont);
+      $cont = mysqli_real_escape_string($conn, $cont);
+      $cont = htmlentities($cont);
+  
+      return $cont;
+  }
+  }
 
 while ($row = mysqli_fetch_assoc($quer)) {
   echo "

@@ -3,6 +3,18 @@ $conn = mysqli_connect("localhost", "root", "") or die("Connessione non riuscita
 
 mysqli_select_db($conn, "civicsense") or die("DataBase non trovato"); #connessione al db
 
+if (!function_exists('sanitize_content')) {
+  function sanitize_content($conn, $content)
+  {
+      $cont = stripslashes($content);
+      $cont = strip_tags($cont);
+      $cont = mysqli_real_escape_string($conn, $cont);
+      $cont = htmlentities($cont);
+  
+      return $cont;
+  }
+  }
+
 if (isset($_SESSION['idT'])) {
   $team = (isset($_POST['team'])) ? $_POST['team'] : null;
 
