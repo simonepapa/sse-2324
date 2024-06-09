@@ -96,7 +96,7 @@ $token = $_SESSION['token'];
     $email = (isset($_POST['email'])) ? mysqli_real_escape_string($conn, $_POST['email']) : null;
     $pass = (isset($_POST['password'])) ? mysqli_real_escape_string($conn, $_POST['password']) : null;
     $confirmPass = (isset($_POST['confirmPassword'])) ? mysqli_real_escape_string($conn, $_POST['confirmPassword']) : null;
-    $privacyConsent = $_POST['privacyConsentHidden'] == '0' ? 0 : 1;
+    $privacyConsent = isset($_POST['privacyConsentHidden']) ? $_POST['privacyConsentHidden'] == '0' ? 0 : 1 : 0;
 
     $lengthPattern = '/.{8,}/';
     $numberSymbolPattern = '/(?=.*[0-9])|(?=.*[^A-Za-z0-9])/';
@@ -111,8 +111,6 @@ $token = $_SESSION['token'];
 
       if ($email && $pass !== null) {
         $query = ("INSERT INTO team(email_t, password, privacy_consent) VALUES (?, ?, ?)");
-
-        $consent = $_POST['privacyConsent'];
 
         $stmt = mysqli_prepare($conn, $query);
         mysqli_stmt_bind_param($stmt, 'ssi', $email, $hashed_password, $privacyConsent);

@@ -40,14 +40,14 @@ $token = $_SESSION['token'];
 <body id="page-top">
 
 
-  <div class="card-header">
+  <div class="card-header ms-4 mt-2">
     <i class="fas fa-table"></i>
     inserisci segnalazione
 
   </div>
 
   <!-- <form method="post" action="inserisci.php" style=" margin-top:5%; margin-left:5%;">-->
-  <form method="post" action="inserisci.php" style=" margin-top:5%; margin-left:5%;" enctype="multipart/form-data">
+  <form method="post" action="inserisci.php" style=" margin-top:16px; margin-left:5%;" enctype="multipart/form-data">
     <b>DATA INVIO: <input type="date" name="data"><br><br></b>
     <b> ORA INVIO: </b> <input type="time" name="ora"><br><br></b>
     <b> VIA (VIA NOMEVIA, N CIVICO, CAP, PROVINCIA (ES: PULSANO O TARANTO), TA, ITALIA: )<input type="text"
@@ -66,8 +66,19 @@ $token = $_SESSION['token'];
       <option value="4">SEGNALETICA E SEMAFORI</option>
       <option value="4">ILLUMINAZIONE PUBBLICA</option>
     </select>
-
-    <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+    <div class="form-group mt-4">
+      <div class="form-row row">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="privacyConsent" value="" id="privacyConsent">
+          <input type="hidden" name="privacyConsentHidden" id="privacyConsentHidden" value="0" />
+          <label class="form-check-label" for="privacyConsent">
+            I explicitly give my consent for the use of my data as described in the <a target="_blank"
+              href="privacy-policy.php">Privacy Policy</a>
+          </label>
+        </div>
+      </div>
+    </div>
+    <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:3%;">
     <input type="hidden" name="token" value="<?php echo $token; ?>" />
   </form>
 
@@ -135,6 +146,7 @@ $long=stripslashes($long);
       $lat = isset($_POST['lat']) ? mysqli_real_escape_string($conn, stripslashes($_POST['lat'])) : null;
       $long = isset($_POST['long']) ? mysqli_real_escape_string($conn, stripslashes($_POST['long'])) : null;
       $tipo = isset($_POST['tipo']) ? mysqli_real_escape_string($conn, stripslashes($_POST['tipo'])) : null;
+      $privacyConsent = isset($_POST['privacyConsentHidden']) ? $_POST['privacyConsentHidden'] == '0' ? 0 : 1 : 0;
 
       // Handling file upload securely
       $allowed_mime_types = ['image/png', 'image/jpg', 'image/jpeg'];
@@ -149,9 +161,9 @@ $long=stripslashes($long);
       }
 
       if ($data && $ora && $via && $descr && $email && $lat && $long && $tipo && $foto) {
-        $sql = "INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine, privacy_consent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, 'ssssssidd', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
+        mysqli_stmt_bind_param($stmt, 'ssssssiddi', $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long, $privacyConsent);
         $result = mysqli_stmt_execute($stmt);
 
         if ($result) {
@@ -169,11 +181,12 @@ $long=stripslashes($long);
     mysqli_close($conn);
   }
 
-
-
-
-
   ?>
 
+  <script>
+    document.getElementById("privacyConsent").addEventListener("change", (e) => {
+      document.getElementById("privacyConsentHidden").value = e.target.checked === true ? '1' : '0'
+    })
+  </script>
 
 </body>
