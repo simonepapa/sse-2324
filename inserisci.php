@@ -21,19 +21,19 @@ $token = $_SESSION['token'];
   <title>SB Admin - Tables</title>
 
   <!-- Bootstrap core CSS-->
-  <link href="Admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/Ingegneria/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom fonts for this template-->
-  <link href="Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="/Ingegneria/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
   <!-- Page level plugin CSS-->
-  <link href="Admin/vendor/datatables/datatables.min.css" rel="stylesheet">
+  <link href="/Ingegneria/admin/vendor/datatables/datatables.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="Admin/css/sb-admin.css" rel="stylesheet">
+  <link href="/Ingegneria/admin/css/sb-admin.css" rel="stylesheet">
 
   <!-- Grafico -->
-  <link rel="stylesheet" href="Admin/css/graficostyle.css">
+  <link rel="stylesheet" href="/Ingegneria/admin/css/graficostyle.css">
 
 </head>
 
